@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Kuku! 💗</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Indie+Flower&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --paper: #fdfdfd;
+            --lines: #e0ebf3;
+            --margin-line: #ffadad;
+            --ink: #1a4d8c;
+            --pink: #ff4d94;
+            --bg-soft: #fff5f7;
+        }
+
+        /* RESET TO REMOVE ALL DEFAULT BLANK SPACE */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: var(--bg-soft);
+            color: #333;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- HEART INTRO --- */
+        #intro {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        .heart-loader { font-size: 5rem; animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+        /* --- TIGHT HERO SECTION --- */
+        header {
+            padding: 20px 10px 10px; /* Minimal padding */
+            text-align: center;
+            background: white;
+        }
+        header h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--pink);
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: 10px;
+        }
+        .hero-vid-box {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 4px solid var(--pink);
+            line-height: 0; /* Removes bottom gap in block elements */
+        }
+        #hero-vid { width: 100%; height: auto; display: block; }
+
+        /* --- THE COMPACT NOTEBOOK PHOTO SECTION --- */
+        .notebook-section {
+            max-width: 1000px;
+            margin: 10px auto; /* Reduced margin */
+            background-color: var(--paper);
+            background-image: linear-gradient(var(--lines) 1px, transparent 1px);
+            background-size: 100% 28px;
+            position: relative;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            padding: 30px 20px 30px 65px; /* Reduced padding */
+            border-left: 15px solid #333;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .notebook-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 55px;
+            width: 2px; height: 100%;
+            background-color: var(--margin-line);
+        }
+
+        .spiral {
+            position: absolute;
+            left: -10px; top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        .ring {
+            width: 30px; height: 10px;
+            background: linear-gradient(to bottom, #888, #eee, #888);
+            border-radius: 5px;
+            border: 1px solid #666;
+        }
+
+        /* TIGHT PHOTO GRID */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px; /* Tight gap to kill blank space */
+        }
+
+        .polaroid {
+            background: white;
+            padding: 8px 8px 30px 8px; /* Tighter bottom for caption */
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            border: 1px solid #eee;
+        }
+        .polaroid:nth-child(even) { transform: rotate(1deg); }
+        .polaroid:nth-child(odd) { transform: rotate(-1deg); }
+        .polaroid:hover { transform: scale(1.03) rotate(0deg); z-index: 5; }
+
+        .polaroid img, .polaroid video {
+            width: 100%; height: 280px;
+            object-fit: cover; display: block;
+        }
+
+        .caption {
+            font-family: 'Indie Flower', cursive;
+            color: var(--ink);
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        /* --- TIGHT MESSAGE SECTION --- */
+        .message-container {
+            max-width: 1000px;
+            margin: 0 auto 20px;
+            padding: 30px 20px;
+            background: white;
+            border-top: 2px dashed var(--pink);
+        }
+        .message-content {
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--ink);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .message-content p { margin-bottom: 15px; }
+        .pink-text { color: var(--pink); font-weight: bold; }
+
+        /* --- MOBILE ADAPTATION --- */
+        @media (max-width: 600px) {
+            .notebook-section {
+                padding: 20px 10px 20px 50px;
+                margin: 5px;
+            }
+            .notebook-section::before { left: 42px; }
+            .spiral { left: -8px; }
+            .ring { width: 22px; }
+            .photo-grid { gap: 15px; }
+            .polaroid img, .polaroid video { height: auto; max-height: 350px; }
+        }
+
+        footer { text-align: center; padding: 20px; color: var(--pink); font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div id="intro"><div class="heart-loader">💗</div></div>
+
+    <header>
+        <h1>Happy Birthday Kuku! 💗</h1>
+        <div class="hero-vid-box">
+            <video autoplay muted loop playsinline id="hero-vid">
+                <source src="background-video.mp4" type="video/mp4">
+            </video>
+        </div>
+    </header>
+
+    <div class="notebook-section">
+        <div class="spiral">
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+        </div>
+
+        <div class="photo-grid">
+            <div class="polaroid"><img src="1st-photo.jpg"><div class="caption">Where it all began! 💗</div></div>
+            <div class="polaroid"><img src="cutest.jpg"><div class="caption">Just look at this cutie! 😍</div></div>
+            <div class="polaroid"><img src="his-fav.jpg"><div class="caption">I know you love this one! 💗</div></div>
+            <div class="polaroid">
+                <video controls><source src="random-moment.mp4" type="video/mp4"></video>
+                <div class="caption">A random "us" moment 💗</div>
+            </div>
+            <div class="polaroid"><img src="your-fav.jpg"><div class="caption">My favorite click! ✨</div></div>
+            <div class="polaroid"><img src="first-garba.jpg"><div class="caption">Our 1st Garba! 💃</div></div>
+            <div class="polaroid">
+                <video controls><source src="garba-video.mp4" type="video/mp4"></video>
+                <div class="caption">We killed it! 🔥</div>
+            </div>
+            <div class="polaroid"><img src="first-diwali.jpg"><div class="caption">1st Diwali light 🪔</div></div>
+            <div class="polaroid">
+                <video controls><source src="my-birthday-video.mp4" type="video/mp4"></video>
+                <div class="caption">My birthday with u! 💗</div>
+            </div>
+            <div class="polaroid"><img src="year-end.jpg"><div class="caption">Ending 2025 together 💗</div></div>
+            <div class="polaroid"><img src="new-phone.jpg"><div class="caption">New phone test! 📱</div></div>
+            <div class="polaroid"><img src="alibaug-photo.jpg"><div class="caption">1st Alibaug trip! 🌊</div></div>
+            <div class="polaroid">
+                <video controls><source src="alibaug-video.mp4" type="video/mp4"></video>
+                <div class="caption">Take me back! 💗</div>
+            </div>
+        </div>
+    </div>
+
+    <section class="message-container">
+        <div class="message-content">
+            <p class="pink-text">To my best, cute, and handsome boyfriend, happy birthday 💗</p>
+            <p>This is the day I’ve been waiting for, to tell you how I feel about you. You’re not just my boyfriend… sometimes you’ve been my best friend, sometimes like my mother, and sometimes like my father. Thank you for being all of that for me. I love being your baby.</p>
+            <p>Honestly, I’ve never felt this way for anyone before, because with you, I feel like I’m at home. I want this feeling to stay with me forever. The first half of 2025 was really bad for me, but in the second half, one beautiful thing happened — you came into my life.</p>
+            <p>After that, my life became super happy, cool, and yes, sometimes a little sad too… but it’s okay, because I know you’ll always be there for me.</p>
+            <p>In the beginning, my anger issues may have hurt you — I’m really sorry for that. Now I don’t want to be angry at you anymore. You’ve always been there for me when I’m angry, sad, and even when I’m happy.</p>
+            <p>I want to share all my emotions with you, because with you, I feel complete. I want to stay like this with you forever.</p>
+            <p>Everyone thinks you’re very kanjus and don’t care, but I know the truth — you spend so much and care even more. I hope you never feel that I don’t care about you, because I really do. I’m very, very happy that you are in my life.</p>
+            <p class="pink-text">Now I can’t even imagine my life without you 💗</p>
+        </div>
+    </section>
+
+    <footer>💗 for Kuku (Sahil)</footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const intro = document.getElementById('intro');
+                intro.style.transition = 'opacity 0.6s ease';
+                intro.style.opacity = '0';
+                setTimeout(() => intro.style.display = 'none', 600);
+            }, 1800);
+        });
+    </script>
+</body>
+</html>
