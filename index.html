@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Countdown 💗</title>
+    <title>Happy Birthday, Kuku! 💗</title>
     <style>
         /* --- CSS VARIABLES & RESET --- */
         :root {
-            --bg-dark: #0a0a0a;
-            --text-light: #f4f4f4;
-            --accent-pink: #ff69b4;
-            --accent-dark-pink: #d11a7d;
+            --bg-black: #0a0a0a;
+            --surface-black: #1a1a1a;
+            --pink-main: #ff69b4;
+            --pink-glow: rgba(255, 105, 180, 0.6);
+            --text-light: #fdfdfd;
         }
 
         * {
@@ -21,38 +22,18 @@
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-black);
             color: var(--text-light);
             overflow-x: hidden;
         }
 
-        /* --- TYPOGRAPHY & UTILITIES --- */
+        /* --- TYPOGRAPHY & HEADER --- */
         h1, h2, h3 {
-            color: var(--accent-pink);
+            color: var(--pink-main);
             text-align: center;
         }
 
-        .highlight {
-            color: var(--text-light);
-            background: var(--accent-dark-pink);
-            padding: 0 5px;
-            border-radius: 4px;
-        }
-
-        /* Scroll Animation Classes */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- HERO & COUNTDOWN SECTION --- */
-        header {
+        .hero {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -60,305 +41,299 @@
             align-items: center;
             text-align: center;
             padding: 2rem;
-            border-bottom: 2px solid var(--accent-dark-pink);
+            background: radial-gradient(circle at center, #2a0b1a 0%, var(--bg-black) 70%);
         }
 
-        header h1 {
-            font-size: 3rem;
+        .hero h1 {
+            font-size: 4rem;
             margin-bottom: 1rem;
-            animation: pulse 2s infinite;
+            text-shadow: 0 0 20px var(--pink-glow);
+            animation: float 3s ease-in-out infinite;
         }
 
-        .timer-container {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .time-box {
-            background: #1a1a1a;
-            border: 2px solid var(--accent-pink);
-            border-radius: 10px;
-            padding: 1.5rem;
-            min-width: 100px;
-            box-shadow: 0 0 15px rgba(255, 105, 180, 0.2);
-        }
-
-        .time-box span {
-            display: block;
-            font-size: 2.5rem;
-            font-weight: bold;
-        }
-
-        .time-box p {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #aaa;
-        }
-
-        /* --- 10 DAYS COUNTDOWN SECTIONS --- */
-        .day-section {
-            padding: 4rem 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            border-left: 3px solid var(--accent-pink);
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .day-section::before {
-            content: '💗';
-            position: absolute;
-            left: -16px;
-            top: 0;
+        .hero p {
             font-size: 1.5rem;
-            background: var(--bg-dark);
-        }
-
-        .day-section h2 {
-            text-align: left;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .day-section p {
-            font-size: 1.1rem;
-            line-height: 1.6;
+            letter-spacing: 2px;
             color: #ccc;
         }
 
-        /* --- FINALE: MEMORIES & MESSAGE --- */
-        #finale {
+        .date-badge {
+            margin-top: 2rem;
+            background: var(--pink-main);
+            color: var(--bg-black);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px var(--pink-glow);
+        }
+
+        /* --- PHOTO BOOK SECTION --- */
+        .photobook-section {
             padding: 5rem 2rem;
-            background: linear-gradient(to bottom, var(--bg-dark), #1a0512);
-            text-align: center;
-            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        #finale h2 {
-            font-size: 3.5rem;
-            margin-bottom: 3rem;
+        .photobook-section > h2 {
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
         }
 
-        .memory-grid {
+        .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto 4rem auto;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            perspective: 1000px; /* Enables 3D space for the flip animation */
         }
 
+        /* Polaroid / Scrapbook Card Style */
         .memory-card {
-            background: #111;
-            padding: 1rem;
-            border-radius: 10px;
-            border: 1px solid #333;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--surface-black);
+            padding: 15px 15px 25px 15px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s;
+            
+            /* Initial state for scroll animation */
+            opacity: 0;
+            transform: rotateY(-90deg) translateZ(-100px);
+            transform-origin: left center;
         }
 
+        /* The class added by JS when scrolled into view */
+        .memory-card.is-visible {
+            opacity: 1;
+            transform: rotateY(0deg) translateZ(0);
+        }
+
+        /* Hover effect */
         .memory-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
-            border-color: var(--accent-pink);
+            transform: scale(1.05) translateY(-10px) !important;
+            border-color: var(--pink-main);
+            box-shadow: 0 0 25px var(--pink-glow);
+            z-index: 10;
         }
 
         .memory-card img {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            background: #222; /* Placeholder background */
+            border-radius: 4px;
+            background-color: #222; /* Placeholder color before images load */
+            margin-bottom: 15px;
+        }
+
+        .memory-card h3 {
+            font-size: 1.4rem;
+            color: var(--text-light);
+        }
+
+        .memory-card .heart-icon {
+            color: var(--pink-main);
+            font-size: 1.2rem;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        /* --- FINAL MESSAGE SECTION --- */
+        .message-section {
+            padding: 8rem 2rem;
+            background: linear-gradient(to bottom, var(--bg-black), #1a0512);
+            text-align: center;
         }
 
         .message-box {
             max-width: 800px;
             margin: 0 auto;
-            background: rgba(255, 105, 180, 0.1);
-            padding: 3rem;
-            border-radius: 15px;
-            border: 1px dashed var(--accent-pink);
+            background: rgba(255, 105, 180, 0.05);
+            padding: 4rem 3rem;
+            border-radius: 20px;
+            border: 1px dashed var(--pink-main);
+            
+            /* Initial state for fade-up animation */
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .message-box.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .message-box h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px var(--pink-glow);
         }
 
         .message-box p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             line-height: 1.8;
-            font-style: italic;
+            color: #ddd;
+            margin-bottom: 1.5rem;
         }
 
-        /* --- ANIMATIONS & RESPONSIVE --- */
-        @keyframes pulse {
-            0% { text-shadow: 0 0 10px rgba(255, 105, 180, 0.5); }
-            50% { text-shadow: 0 0 25px rgba(255, 105, 180, 1); }
-            100% { text-shadow: 0 0 10px rgba(255, 105, 180, 0.5); }
+        /* --- KEYFRAME ANIMATIONS --- */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
 
-        @media (max-width: 600px) {
-            .timer-container { flex-wrap: wrap; justify-content: center; }
-            header h1 { font-size: 2rem; }
-            .day-section { padding: 2rem 1rem; }
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .photobook-section { padding: 3rem 1.5rem; }
+            .message-box { padding: 2rem 1.5rem; }
+            .message-box h2 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Countdown to My Love's Birthday 💗</h1>
-        <p>Every second brings us closer to your special day!</p>
-        
-        <div class="timer-container">
-            <div class="time-box">
-                <span id="days">00</span>
-                <p>Days</p>
-            </div>
-            <div class="time-box">
-                <span id="hours">00</span>
-                <p>Hours</p>
-            </div>
-            <div class="time-box">
-                <span id="minutes">00</span>
-                <p>Minutes</p>
-            </div>
-            <div class="time-box">
-                <span id="seconds">00</span>
-                <p>Seconds</p>
-            </div>
-        </div>
+    <header class="hero">
+        <h1>Happy Birthday, Kuku! 💗</h1>
+        <p>Welcome to our digital memory book.</p>
+        <div class="date-badge">May 21st</div>
     </header>
 
-    <main>
-        <div class="day-section fade-in" id="day-10">
-            <h2>10 Days to Go!</h2>
-            <p>Double digits! The countdown officially begins. I can't wait to celebrate you. 💗</p>
-        </div>
-
-        <div class="day-section fade-in" id="day-9">
-            <h2>9 Days to Go!</h2>
-            <p>Thinking about all the amazing things we've done this past year.</p>
-        </div>
-
-        <div class="day-section fade-in" id="day-8">
-            <h2>8 Days to Go!</h2>
-            <p>Just over a week left! I hope you're getting as excited as I am.</p>
-        </div>
-
-        <div class="day-section fade-in" id="day-7">
-            <h2>7 Days to Go!</h2>
-            <p>One week away. Time to start wrapping your presents! 🎁</p>
-        </div>
-
-        <div class="day-section fade-in" id="day-6">
-            <h2>6 Days to Go!</h2>
-            <p>Six days until my favorite person's favorite day.</p>
-        </div>
-
-        <div class="day-section fade-in" id="day-5">
-            <h2>5 Days to Go!</h2>
-            <p>Counting down on one hand now! The anticipation is real. 💗</p>
-        </div>
-
-        <div class="day-section fade-in" id="day-4">
-            <h2>4 Days to Go!</h2>
-            <p>Four more sleeps! Are you ready for all the surprises?</p>
-        </div>
-
-        <div class="day-section fade-in" id="day-3">
-            <h2>3 Days to Go!</h2>
-            <p>Three days! The weekend of YOU is almost here.</p>
-        </div>
-
-        <div class="day-section fade-in" id="day-2">
-            <h2>2 Days to Go!</h2>
-            <p>Just 48 hours. Let the pre-celebrations begin!</p>
-        </div>
-
-        <div class="day-section fade-in" id="day-1">
-            <h2>1 Day to Go!</h2>
-            <p>Tomorrow is the big day! Get a good night's sleep, birthday boy. 💗</p>
-        </div>
-    </main>
-
-    <section id="finale" class="fade-in">
-        <h2>Our Beautiful Journey 💗</h2>
+    <main class="photobook-section">
+        <h2>Flipping Through Our Story...</h2>
         
-        <div class="memory-grid">
+        <div class="gallery-grid">
             <div class="memory-card">
-                <img src="images/first-date.jpg" alt="Our First Date">
+                <img src="path/to/your/image1.jpg" alt="Our First Date">
                 <h3>Our First Date</h3>
-                <p>The day it all started. I was so nervous!</p>
+                <span class="heart-icon">💗</span>
             </div>
             
             <div class="memory-card">
-                <img src="images/diwali.jpg" alt="First Diwali">
-                <h3>First Diwali</h3>
-                <p>Dressing up and lighting up the night together.</p>
+                <img src="path/to/your/image2.jpg" alt="Cute Photo">
+                <h3>Cute Photo</h3>
+                <span class="heart-icon">💗</span>
             </div>
 
             <div class="memory-card">
-                <img src="images/best-memory.jpg" alt="Best Memory">
+                <img src="path/to/your/image3.jpg" alt="Best Memory">
                 <h3>Best Memory</h3>
-                <p>Every moment with you is my favorite, but this one stands out.</p>
+                <span class="heart-icon">💗</span>
+            </div>
+
+            <div class="memory-card">
+                <img src="path/to/your/image4.jpg" alt="That Crazy Trip">
+                <h3>That Crazy Trip</h3>
+                <span class="heart-icon">💗</span>
+            </div>
+
+            <div class="memory-card">
+                <img src="path/to/your/image5.jpg" alt="Lazy Sunday">
+                <h3>Lazy Sunday</h3>
+                <span class="heart-icon">💗</span>
+            </div>
+
+            <div class="memory-card">
+                <img src="path/to/your/image6.jpg" alt="Dressed Up">
+                <h3>Dressed Up</h3>
+                <span class="heart-icon">💗</span>
+            </div>
+
+            <div class="memory-card">
+                <img src="path/to/your/image7.jpg" alt="Foodie Adventures">
+                <h3>Foodie Adventures</h3>
+                <span class="heart-icon">💗</span>
+            </div>
+
+            <div class="memory-card">
+                <img src="path/to/your/image8.jpg" alt="Silly Faces">
+                <h3>Silly Faces</h3>
+                <span class="heart-icon">💗</span>
+            </div>
+
+            <div class="memory-card">
+                <img src="path/to/your/image9.jpg" alt="Late Night Drives">
+                <h3>Late Night Drives</h3>
+                <span class="heart-icon">💗</span>
+            </div>
+
+            <div class="memory-card">
+                <img src="path/to/your/image10.jpg" alt="Movie Night">
+                <h3>Movie Night</h3>
+                <span class="heart-icon">💗</span>
+            </div>
+
+            <div class="memory-card">
+                <img src="path/to/your/image11.jpg" alt="Our Anniversary">
+                <h3>Our Anniversary</h3>
+                <span class="heart-icon">💗</span>
+            </div>
+
+            <div class="memory-card">
+                <img src="path/to/your/image12.jpg" alt="Forever">
+                <h3>Forever</h3>
+                <span class="heart-icon">💗</span>
             </div>
         </div>
+    </main>
 
-        <div class="message-box">
-            <h3>Happy Birthday, [Name]!</h3>
-            <br>
+    <section class="message-section">
+        <div class="message-box scroll-anim">
+            <h2>Happy Birthday, Kuku! 💗</h2>
             <p>
-                To the most amazing boyfriend in the world, words can't describe how much you mean to me. 
-                Thank you for the endless laughs, the unwavering support, and for simply being you. 
-                I hope this year brings you everything you've ever wished for. Let's make today unforgettable! 
-                I love you! 💗
+                To my amazing boyfriend, today is all about celebrating you! Every photo above is a reminder of how lucky I am to have you in my life. 
+            </p>
+            <p>
+                Thank you for the endless laughs, the unwavering support, and for making every single day brighter. I can't wait to fill countless more pages in our photo book. 
+            </p>
+            <p>
+                I hope May 21st is as wonderful, special, and perfect as you are to me. I love you! 
             </p>
         </div>
     </section>
 
     <script>
-        // --- 1. COUNTDOWN LOGIC ---
-        // EDIT THIS DATE: Format is "Year-Month-DayTHours:Minutes:Seconds"
-        const birthdayDate = new Date("2026-05-15T00:00:00").getTime();
+        // Intersection Observer to trigger animations when elements scroll into view
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // Set up the observer options
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // Trigger when 15% of the element is visible
+            };
 
-        const countdownFunction = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = birthdayDate - now;
+            // Observer for the 3D Book Page Flip effect (Memory Cards)
+            const cardObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Add a slight stagger delay based on the card's index in the grid
+                        setTimeout(() => {
+                            entry.target.classList.add('is-visible');
+                        }, index * 100); // 100ms delay between each card flipping in
+                        
+                        // Stop observing once animated
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
 
-            // Time calculations for days, hours, minutes and seconds
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Apply observer to all memory cards
+            const cards = document.querySelectorAll('.memory-card');
+            cards.forEach(card => cardObserver.observe(card));
 
-            // Output the result in elements
-            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+            // Observer for the smooth fade-up message box
+            const messageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.3 });
 
-            // If the countdown is over, display a message instead of the timer
-            if (distance < 0) {
-                clearInterval(countdownFunction);
-                document.querySelector(".timer-container").innerHTML = "<div class='highlight' style='font-size: 2rem; padding: 1rem;'>It's Your Birthday! 🎉</div>";
-            }
-        }, 1000);
-
-        // --- 2. SCROLL ANIMATION LOGIC ---
-        // Uses IntersectionObserver to trigger fade-ins when elements enter the viewport
-        const observerOptions = {
-            threshold: 0.2 // Element triggers when 20% visible
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        // Apply observer to all elements with the 'fade-in' class
-        document.querySelectorAll('.fade-in').forEach((element) => {
-            observer.observe(element);
+            const messageBox = document.querySelector('.message-box');
+            if(messageBox) messageObserver.observe(messageBox);
         });
     </script>
 </body>
