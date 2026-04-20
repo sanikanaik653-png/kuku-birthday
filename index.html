@@ -18,7 +18,7 @@
             --pink: #ff4d94;
         }
 
-        /* --- STAGE 1: REMOVING ALL BLANK SPACE --- */
+        /* --- REMOVING BLANK SPACE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
@@ -32,50 +32,41 @@
         /* --- THE NOTEBOOK PAGE --- */
         #notebook {
             width: 100%;
-            max-width: 1000px; /* Desktop Wide View */
+            max-width: 1000px; 
             background-color: var(--paper);
             background-image: linear-gradient(var(--lines) 1px, transparent 1px);
             background-size: 100% 28px;
             position: relative;
             box-shadow: 0 0 40px rgba(0,0,0,0.15);
-            padding: 10px 30px 40px 85px; /* Tight top padding */
+            padding: 10px 30px 40px 85px; 
             border-left: 1px solid #ddd;
         }
 
-        /* Red Margin Line */
         #notebook::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 70px;
-            width: 2px;
-            height: 100%;
+            top: 0; left: 70px;
+            width: 2px; height: 100%;
             background-color: var(--margin-line);
         }
 
-        /* Spiral Binder Rings */
         .spiral {
             position: absolute;
-            left: 20px;
-            top: 30px;
+            left: 20px; top: 30px;
             display: flex;
             flex-direction: column;
             gap: 28px;
             z-index: 10;
         }
         .ring {
-            width: 38px;
-            height: 12px;
+            width: 38px; height: 12px;
             background: linear-gradient(to right, #bbb, #eee, #999);
             border-radius: 10px;
             border: 1px solid #888;
         }
 
-        /* --- HEADER & VIDEO (NO GAPS) --- */
-        .header-content {
-            text-align: center;
-            padding-top: 10px;
-        }
+        /* --- HEADER & VIDEO --- */
+        .header-content { text-align: center; padding-top: 10px; }
         h1 {
             font-family: 'Dancing Script', cursive;
             color: var(--pink);
@@ -90,11 +81,11 @@
             margin: 0 auto 20px auto;
             border: 8px solid white;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            line-height: 0; /* Removes gap under video */
+            line-height: 0;
         }
         #hero-vid { width: 100%; height: auto; display: block; }
 
-        /* --- PHOTO GRID (TIGHT POLAROIDS) --- */
+        /* --- PHOTO GRID --- */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -109,7 +100,6 @@
             transition: transform 0.3s ease;
             border: 1px solid #f0f0f0;
         }
-        /* Random tilts for that scrapbook look you love */
         .polaroid:nth-child(even) { transform: rotate(1.5deg); }
         .polaroid:nth-child(odd) { transform: rotate(-1.5deg); }
         
@@ -135,7 +125,7 @@
             font-weight: bold;
         }
 
-        /* --- DIARY MESSAGE (BLUE PEN STYLE) --- */
+        /* --- DIARY MESSAGE --- */
         .diary-entry {
             font-family: 'Indie Flower', cursive;
             color: var(--ink);
@@ -148,7 +138,7 @@
         .diary-entry p { margin-bottom: 28px; }
         .highlight { color: var(--pink); font-weight: bold; }
 
-        /* --- INTRO (OPTIMIZED FOR FAST LOAD) --- */
+        /* --- INTRO --- */
         #intro {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -161,13 +151,12 @@
         .heart { font-size: 5rem; animation: pulse 0.8s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-        /* --- MOBILE ADAPTATION --- */
         @media (max-width: 600px) {
             #notebook { padding: 15px 10px 40px 60px; }
             #notebook::before { left: 50px; }
             .spiral { left: 12px; gap: 32px; }
-            .ring { width: 28px; height: 10px; }
-            .photo-grid { grid-template-columns: 1fr; gap: 15px; }
+            .ring { width: 28px; }
+            .photo-grid { grid-template-columns: 1fr; }
             .polaroid img, .polaroid video { height: auto; max-height: 400px; }
         }
 
@@ -182,7 +171,7 @@
         <div class="spiral">
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
-            <div class="ring"></div><div class="ring"></div><div class="ring).</div><div class="ring"></div>
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
         </div>
 
@@ -207,6 +196,9 @@
             <div class="polaroid"><video controls><source src="my-birthday-video.mp4" type="video/mp4"></video><div class="caption">Birthday was special cuz of u! 💗</div></div>
             <div class="polaroid"><img src="year-end.jpg"><div class="caption">Ending 2025 together 💗</div></div>
             <div class="polaroid"><img src="new-phone.jpg"><div class="caption">Testing the camera on you 📱</div></div>
+            
+            <div class="polaroid"><img src="1st-holi.jpg"><div class="caption">Our colorful 1st Holi! 🎨💗</div></div>
+            
             <div class="polaroid"><img src="alibaug-photo.jpg"><div class="caption">Our 1st Alibaug trip! 🌊</div></div>
             <div class="polaroid"><video controls><source src="alibaug-video.mp4" type="video/mp4"></video><div class="caption">Take me back! 💗</div></div>
         </div>
@@ -232,7 +224,7 @@
                 intro.style.transition = 'opacity 0.5s ease';
                 intro.style.opacity = '0';
                 setTimeout(() => intro.style.display = 'none', 500);
-            }, 1000); // 1-second load as requested
+            }, 1000);
         });
     </script>
 </body>
