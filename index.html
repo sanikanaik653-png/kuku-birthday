@@ -3,306 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Sahil! 💗</title>
-    <link rel="icon" type="image/png" href="favicon.jpg">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Happy Birthday Kuku! 💗</title>
+    <link rel="icon" type="image/png" href="kuku-icon.png">
+    
     <style>
+        /* --- CSS VARIABLES & THEME --- */
         :root {
-            --pink: #FFC0CB;
-            --hot-pink: #FF69B4;
-            --black: #0b0b0b;
-            --card-bg: #1a1a1a;
-            --text-light: #ffffff;
-            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --pink: #ff4d94;
+            --dark-pink: #cc0052;
+            --black: #0a0a0a;
+            --grey: #1a1a1a;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
             background-color: var(--black);
-            color: var(--text-light);
-            font-family: 'Montserrat', sans-serif;
+            color: var(--white);
             overflow-x: hidden;
             line-height: 1.6;
         }
 
-        /* --- Global Animations --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* --- REUSABLE COMPONENTS --- */
+        .section-title {
+            text-align: center;
+            color: var(--pink);
+            font-size: 2.5rem;
+            margin: 50px 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
 
-        @keyframes heartPulse {
+        .heart-icon {
+            color: var(--pink);
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: var(--transition);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- Header/Hero Section --- */
+        /* --- HERO SECTION --- */
         header {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&q=80&w=1000'); /* Birthday themed bg */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('hero-bg.jpg'); /* Replace with a background image */
             background-size: cover;
             background-position: center;
-            border-bottom: 4px solid var(--pink);
-        }
-
-        .hero-h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: clamp(3rem, 10vw, 6rem);
-            color: var(--pink);
-            text-shadow: 0 0 20px rgba(255, 192, 203, 0.5);
-            margin-bottom: 10px;
-        }
-
-        .hero-sub {
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        /* --- Photo Book Section --- */
-        .photo-book {
-            padding: 100px 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Dancing Script', cursive;
-            color: var(--pink);
-            font-size: 3rem;
             text-align: center;
-            margin-bottom: 50px;
         }
 
+        header h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            color: var(--pink);
+            text-shadow: 2px 2px 10px rgba(255, 77, 148, 0.5);
+        }
+
+        /* --- PHOTO BOOK CONTAINER --- */
+        .book-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .category-group {
+            margin-bottom: 100px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .category-group.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- PHOTO GRID & ANIMATION --- */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 20px;
+            perspective: 1000px;
         }
 
-        /* Modern Polaroid Style */
         .photo-card {
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            transition: var(--transition);
             position: relative;
+            height: 350px;
             cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .photo-card:hover {
-            transform: scale(1.03) rotate(1deg);
-            border-color: var(--pink);
-            box-shadow: 0 10px 30px rgba(255, 192, 203, 0.2);
+            transform: rotateY(10deg) rotateX(5deg);
         }
 
-        .photo-wrapper {
+        .photo-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
             width: 100%;
-            aspect-ratio: 4/5;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
             overflow: hidden;
-            background: #222;
-            margin-bottom: 15px;
+            border: 2px solid var(--pink);
+            box-shadow: 0 10px 20px rgba(255, 77, 148, 0.2);
         }
 
-        .photo-wrapper img {
+        .card-front img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.8s;
         }
 
-        .photo-card:hover img {
-            transform: scale(1.1);
-        }
-
-        .photo-caption {
-            font-size: 0.9rem;
+        .card-back {
+            background: var(--grey);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotateY(180deg);
+            padding: 20px;
             text-align: center;
             color: var(--pink);
-            font-weight: 600;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
 
-        /* --- Heartfelt Message Section --- */
+        /* --- MESSAGE SECTION --- */
         .message-section {
-            background: var(--card-bg);
-            padding: 100px 10%;
+            background: var(--grey);
+            padding: 80px 20px;
             text-align: center;
-            border-top: 1px solid #333;
-            border-bottom: 1px solid #333;
+            border-top: 3px solid var(--pink);
+            margin-top: 50px;
         }
 
         .message-content {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
+            font-size: 1.2rem;
+            color: #eee;
         }
 
-        .message-text {
-            font-size: 1.3rem;
-            line-height: 2;
-            font-style: italic;
-            margin-bottom: 30px;
-        }
-
-        .signature {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            color: var(--pink);
-        }
-
-        /* --- Floating Heart Elements --- */
-        .heart-float {
-            position: fixed;
-            color: var(--pink);
-            pointer-events: none;
-            z-index: 999;
-            animation: floatUp 4s linear forwards;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
-        }
-
-        /* --- Footer --- */
         footer {
-            padding: 50px;
+            padding: 40px;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: #555;
         }
 
-        /* Responsive Fixes */
+        /* --- RESPONSIVE DESIGN --- */
         @media (max-width: 768px) {
-            .hero-h1 { font-size: 4rem; }
-            .message-text { font-size: 1.1rem; }
+            header h1 { font-size: 2.5rem; }
+            .section-title { font-size: 1.8rem; }
+            .photo-card { height: 300px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="reveal">
-            <p class="hero-sub">May 21st • Special Edition</p>
-            <h1 class="hero-h1">Happy Birthday, Kuku! 💗</h1>
-            <p>To my favorite human, Sahil.</p>
-        </div>
+        <h1>Happy Birthday, Kuku! 💗</h1>
+        <p>A digital collection of our favorite moments together.</p>
+        <div style="margin-top: 30px; font-size: 2rem;">👇</div>
     </header>
 
-    <main class="photo-book">
-        <h2 class="section-title reveal">Our Best Memories</h2>
-        
-        <div class="photo-grid">
-            <div class="photo-card reveal">
-                <div class="photo-wrapper">
-                    <img src="https://via.placeholder.com/400x500/1a1a1a/FFC0CB?text=Cute+Moment+1" alt="Memory 1">
-                </div>
-                <p class="photo-caption">That one special day 💗</p>
-            </div>
+    <div class="book-container">
 
-            <div class="photo-card reveal">
-                <div class="photo-wrapper">
-                    <img src="https://via.placeholder.com/400x500/1a1a1a/FFC0CB?text=Memory+2" alt="Memory 2">
+        <section class="category-group" id="cute-photos">
+            <h2 class="section-title">Cute Photos 💗</h2>
+            <div class="photo-grid">
+                <div class="photo-card" onclick="flipCard(this)">
+                    <div class="card-face card-front">
+                        <img src="photo1.jpg" alt="Kuku Cute Photo 1">
+                    </div>
+                    <div class="card-back">You look so handsome here! 💗</div>
                 </div>
-                <p class="photo-caption">First Trip Together</p>
+                <div class="photo-card" onclick="flipCard(this)">
+                    <div class="card-face card-front">
+                        <img src="photo2.jpg" alt="Kuku Cute Photo 2">
+                    </div>
+                    <div class="card-back">My favorite smile. 💗</div>
+                </div>
+                <div class="photo-card" onclick="flipCard(this)">
+                    <div class="card-face card-front">
+                        <img src="photo3.jpg" alt="Kuku Cute Photo 3">
+                    </div>
+                    <div class="card-back">Just look at those eyes! 💗</div>
+                </div>
             </div>
+        </section>
 
-            <div class="photo-card reveal">
-                <div class="photo-wrapper">
-                    <img src="https://via.placeholder.com/400x500/1a1a1a/FFC0CB?text=Memory+3" alt="Memory 3">
+        <section class="category-group" id="best-memories">
+            <h2 class="section-title">Best Memories 💗</h2>
+            <div class="photo-grid">
+                <div class="photo-card" onclick="flipCard(this)">
+                    <div class="card-face card-front">
+                        <img src="photo4.jpg" alt="Memory 1">
+                    </div>
+                    <div class="card-back">The day we couldn't stop laughing.</div>
                 </div>
-                <p class="photo-caption">The Way You Smile</p>
+                <div class="photo-card" onclick="flipCard(this)">
+                    <div class="card-face card-front">
+                        <img src="photo5.jpg" alt="Memory 2">
+                    </div>
+                    <div class="card-back">That cozy dinner night. 💗</div>
+                </div>
             </div>
+        </section>
 
-            <div class="photo-card reveal">
-                <div class="photo-wrapper">
-                    <img src="https://via.placeholder.com/400x500/1a1a1a/FFC0CB?text=Memory+4" alt="Memory 4">
+        <section class="category-group" id="special-moments">
+            <h2 class="section-title">Special Moments 💗</h2>
+            <div class="photo-grid">
+                <div class="photo-card" onclick="flipCard(this)">
+                    <div class="card-face card-front">
+                        <img src="photo6.jpg" alt="Special 1">
+                    </div>
+                    <div class="card-back">A moment I'll cherish forever.</div>
                 </div>
-                <p class="photo-caption">Coffee Dates ☕</p>
+                <div class="photo-card" onclick="flipCard(this)">
+                    <div class="card-face card-front">
+                        <img src="photo7.jpg" alt="Special 2">
+                    </div>
+                    <div class="card-back">Every second with you is special.</div>
+                </div>
             </div>
+        </section>
 
-            <div class="photo-card reveal">
-                <div class="photo-wrapper">
-                    <img src="https://via.placeholder.com/400x500/1a1a1a/FFC0CB?text=Memory+5" alt="Memory 5">
+        <section class="category-group" id="adventures">
+            <h2 class="section-title">Our Adventures 💗</h2>
+            <div class="photo-grid">
+                <div class="photo-card" onclick="flipCard(this)">
+                    <div class="card-face card-front">
+                        <img src="photo8.jpg" alt="Adventure 1">
+                    </div>
+                    <div class="card-back">Exploring the world together!</div>
                 </div>
-                <p class="photo-caption">Always My Favorite</p>
+                <div class="photo-card" onclick="flipCard(this)">
+                    <div class="card-face card-front">
+                        <img src="photo9.jpg" alt="Adventure 2">
+                    </div>
+                    <div class="card-back">Where to next, Kuku? 💗</div>
+                </div>
+                <div class="photo-card" onclick="flipCard(this)">
+                    <div class="card-face card-front">
+                        <img src="photo10.jpg" alt="Adventure 3">
+                    </div>
+                    <div class="card-back">Adventure is better with you.</div>
+                </div>
             </div>
+        </section>
 
-            <div class="photo-card reveal">
-                <div class="photo-wrapper">
-                    <img src="https://via.placeholder.com/400x500/1a1a1a/FFC0CB?text=Memory+6" alt="Memory 6">
-                </div>
-                <p class="photo-caption">The Silly Moments</p>
-            </div>
-
-            <div class="photo-card reveal">
-                <div class="photo-wrapper">
-                    <img src="https://via.placeholder.com/400x500/1a1a1a/FFC0CB?text=Memory+7" alt="Memory 7">
-                </div>
-                <p class="photo-caption">Under the Stars</p>
-            </div>
-
-            <div class="photo-card reveal">
-                <div class="photo-wrapper">
-                    <img src="https://via.placeholder.com/400x500/1a1a1a/FFC0CB?text=Memory+8" alt="Memory 8">
-                </div>
-                <p class="photo-caption">Just Us Two</p>
-            </div>
-
-            <div class="photo-card reveal">
-                <div class="photo-wrapper">
-                    <img src="https://via.placeholder.com/400x500/1a1a1a/FFC0CB?text=Memory+9" alt="Memory 9">
-                </div>
-                <p class="photo-caption">Pure Joy</p>
-            </div>
-
-            <div class="photo-card reveal">
-                <div class="photo-wrapper">
-                    <img src="https://via.placeholder.com/400x500/1a1a1a/FFC0CB?text=Memory+10" alt="Memory 10">
-                </div>
-                <p class="photo-caption">Love You Sahil!</p>
-            </div>
-        </div>
-    </main>
+    </div>
 
     <section class="message-section">
-        <div class="message-content reveal">
-            <h2 class="section-title">A Message for Sahil</h2>
-            <p class="message-text">
-                "To the person who makes my world brighter every single day. Sahil, watching you grow and being by your side is my greatest joy. You're not just my boyfriend; you're my Kuku, my best friend, and my home. May this year bring you as much happiness as you give to everyone around you. Happy Birthday, Love! 💗"
-            </p>
-            <p class="signature">With all my love, Forever.</p>
+        <h2 class="section-title">To My Dearest Kuku...</h2>
+        <div class="message-content">
+            <p>Happy Birthday, Kuku! 💗</p><br>
+            <p>You bring so much light and joy into my life every single day. I wanted to create this little space to remind you of how much you mean to me and how many beautiful memories we've already shared.</p><br>
+            <p>Thank you for being you—for your kindness, your laughter, and your love. I can't wait to see what this next year brings for us. I'll always be your biggest fan!</p><br>
+            <p>I love you to the moon and back. 💗</p>
         </div>
     </section>
 
     <footer>
-        <p>Made with 💗 for Sahil | May 21st, 2026</p>
+        <p>Made with love for Kuku 💗</p>
     </footer>
 
     <script>
-        // 1. Scroll Reveal Animation
+        // --- PHOTO FLIP LOGIC ---
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // --- SCROLL REVEAL ANIMATION ---
+        // Using Intersection Observer for smooth fade-in as Kuku scrolls
         const observerOptions = {
             threshold: 0.1
         };
@@ -310,29 +302,19 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
+                    entry.target.classList.add('visible');
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // 2. Interactive Floating Hearts
-        document.addEventListener('click', (e) => {
-            const heart = document.createElement('div');
-            heart.innerHTML = '💗';
-            heart.classList.add('heart-float');
-            heart.style.left = e.clientX + 'px';
-            heart.style.top = e.clientY + 'px';
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 4000);
+        document.querySelectorAll('.category-group').forEach(section => {
+            observer.observe(section);
         });
 
-        // 3. Simple Console Message for Kuku
-        console.log("%cHappy Birthday Sahil! 💗", "color: #FFC0CB; font-size: 25px; font-weight: bold;");
+        // --- PREVENT RIGHT CLICK (Optional, to protect photos) ---
+        /*
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        */
     </script>
 </body>
 </html>
