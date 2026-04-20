@@ -13,139 +13,133 @@
         :root {
             --paper: #fdfdfd;
             --lines: #e0ebf3;
-            --margin: #ffadad;
+            --margin-line: #ffadad;
             --ink: #1a4d8c;
             --pink: #ff4d94;
+            --desk: #dcc5b0; /* Light wood color for desktop background */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background-color: #f0f0f0; 
+            background-color: var(--desk); 
             display: flex;
             justify-content: center;
+            min-height: 100vh;
+            padding: 20px 10px;
         }
 
-        /* --- THE NOTEBOOK PAGE --- */
-        #diary-page {
+        /* --- THE RESPONSIVE NOTEBOOK --- */
+        #notebook {
             width: 100%;
-            max-width: 480px; /* Measured for mobile phone screens */
-            min-height: 100vh;
+            max-width: 800px; /* Wider for Desktop */
             background-color: var(--paper);
             background-image: linear-gradient(var(--lines) 1px, transparent 1px);
-            background-size: 100% 28px; /* Standard notebook line height */
+            background-size: 100% 28px;
             position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            padding: 20px 15px 40px 55px; /* Margin for spiral binder */
-            border-left: 1px solid #ccc;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            padding: 40px 30px 60px 70px; /* Desktop Padding */
+            border-left: 15px solid #333; /* The "Binder" spine */
         }
 
         /* Red Margin Line */
-        #diary-page::before {
+        #notebook::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 45px;
+            left: 60px;
             width: 2px;
             height: 100%;
-            background-color: var(--margin);
+            background-color: var(--margin-line);
         }
 
-        /* Spiral Binder */
+        /* Spiral Binder Rings */
         .spiral {
             position: absolute;
-            left: 8px;
-            top: 20px;
+            left: -12px;
+            top: 40px;
             display: flex;
             flex-direction: column;
             gap: 25px;
             z-index: 10;
         }
         .ring {
-            width: 22px;
+            width: 35px;
             height: 12px;
-            background: linear-gradient(to right, #ccc, #eee, #aaa);
+            background: linear-gradient(to bottom, #777, #eee, #777);
             border-radius: 10px;
-            border: 1px solid #999;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* --- STARTING HAPPY BIRTHDAY --- */
-        .bday-header {
-            text-align: center;
-            padding-top: 20px;
-            margin-bottom: 20px;
-        }
-        .bday-header h1 {
+        /* --- HEADER & TITLES --- */
+        header { text-align: center; margin-bottom: 40px; }
+        header h1 {
             font-family: 'Dancing Script', cursive;
             color: var(--pink);
-            font-size: 2.8rem;
-            line-height: 1.1;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            line-height: 1.2;
         }
 
-        /* --- HERO VIDEO --- */
         .video-box {
             width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 4px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            border: 8px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: rotate(-1deg);
         }
-        #hero-vid { width: 100%; height: 220px; object-fit: cover; }
+        #hero-vid { width: 100%; display: block; }
 
-        /* --- NOTEBOOK PHOTO THEME --- */
-        .photo-entry {
+        /* --- PHOTO SECTION --- */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .polaroid {
             background: white;
-            padding: 8px 8px 35px 8px;
-            box-shadow: 3px 5px 12px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            padding: 10px 10px 40px 10px;
+            box-shadow: 5px 8px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
             position: relative;
-            transform-origin: center;
         }
-        /* Random Notebook Placement */
-        .photo-entry:nth-child(even) { transform: rotate(1.5deg); }
-        .photo-entry:nth-child(odd) { transform: rotate(-1.5deg); }
-
-        /* "Tape" on the photos */
-        .photo-entry::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 25px;
-            background: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            backdrop-filter: blur(2px);
+        .polaroid:nth-child(even) { transform: rotate(2deg); }
+        .polaroid:nth-child(odd) { transform: rotate(-2deg); }
+        
+        .polaroid:hover {
+            transform: scale(1.05) rotate(0deg);
+            z-index: 5;
         }
 
-        .photo-entry img, .photo-entry video {
+        .polaroid img, .polaroid video {
             width: 100%;
-            height: auto;
-            max-height: 450px;
-            display: block;
+            height: 300px;
             object-fit: cover;
+            display: block;
         }
 
-        .photo-caption {
+        .caption {
             font-family: 'Indie Flower', cursive;
             color: var(--ink);
             text-align: center;
-            margin-top: 10px;
-            font-size: 1.1rem;
+            margin-top: 15px;
+            font-size: 1.2rem;
             font-weight: bold;
         }
 
         /* --- DIARY MESSAGE --- */
-        .diary-text {
+        .diary-entry {
             font-family: 'Indie Flower', cursive;
             color: var(--ink);
-            line-height: 28px; /* Matches line height of paper */
-            font-size: 1.2rem;
-            margin-top: 40px;
+            line-height: 28px;
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
         }
-        .diary-text p { margin-bottom: 28px; }
+        .diary-entry p { margin-bottom: 28px; }
         .highlight { color: var(--pink); font-weight: bold; }
 
         /* --- INTRO --- */
@@ -161,23 +155,35 @@
         .heart { font-size: 5rem; animation: pulse 1s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
-        footer { text-align: center; padding: 40px 0; font-family: 'Indie Flower', cursive; opacity: 0.5; }
+        /* --- MOBILE RESPONSIVE TWEAKS --- */
+        @media (max-width: 600px) {
+            #notebook {
+                padding: 30px 10px 40px 55px;
+                border-left: 8px solid #333;
+            }
+            #notebook::before { left: 45px; }
+            .spiral { left: -8px; gap: 30px; }
+            .ring { width: 25px; height: 10px; }
+            .photo-grid { grid-template-columns: 1fr; }
+            .polaroid img, .polaroid video { height: auto; max-height: 400px; }
+        }
+
+        footer { text-align: center; padding: 40px 0; font-family: 'Indie Flower', cursive; color: #777; }
     </style>
 </head>
 <body>
 
     <div id="intro"><div class="heart">💗</div></div>
 
-    <div id="diary-page">
+    <div id="notebook">
         <div class="spiral">
-            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
         </div>
 
-        <header class="bday-header">
+        <header>
             <h1>Happy Birthday<br>Kuku! 💗</h1>
         </header>
 
@@ -187,86 +193,42 @@
             </video>
         </div>
 
-        <div class="photo-entry">
-            <img src="1st-photo.jpg">
-            <div class="photo-caption">Where it all began! 💗</div>
+        <div class="photo-grid">
+            <div class="polaroid"><img src="1st-photo.jpg"><div class="caption">Where it all began! 💗</div></div>
+            <div class="polaroid"><img src="cutest.jpg"><div class="caption">Just look at this cutie! 😍</div></div>
+            <div class="polaroid"><img src="his-fav.jpg"><div class="caption">I know you love this one! 💗</div></div>
+            <div class="polaroid">
+                <video controls><source src="random-moment.mp4" type="video/mp4"></video>
+                <div class="caption">A random "us" moment 💗</div>
+            </div>
+            <div class="polaroid"><img src="your-fav.jpg"><div class="caption">My absolute favorite click! ✨</div></div>
+            <div class="polaroid"><img src="first-garba.jpg"><div class="caption">Our 1st Garba together! 💃</div></div>
+            <div class="polaroid">
+                <video controls><source src="garba-video.mp4" type="video/mp4"></video>
+                <div class="caption">We literally killed it! 🔥</div>
+            </div>
+            <div class="polaroid"><img src="first-diwali.jpg"><div class="caption">1st Diwali with my light 🪔</div></div>
+            <div class="polaroid">
+                <video controls><source src="my-birthday-video.mp4" type="video/mp4"></video>
+                <div class="caption">My birthday was special cuz of u! 💗</div>
+            </div>
+            <div class="polaroid"><img src="year-end.jpg"><div class="caption">Ending 2025 by your side 💗</div></div>
+            <div class="polaroid"><img src="new-phone.jpg"><div class="caption">Testing the camera on you 📱</div></div>
+            <div class="polaroid"><img src="alibaug-photo.jpg"><div class="caption">Our 1st Alibaug trip! 🌊</div></div>
+            <div class="polaroid">
+                <video controls><source src="alibaug-video.mp4" type="video/mp4"></video>
+                <div class="caption">Take me back to the beach! 💗</div>
+            </div>
         </div>
 
-        <div class="photo-entry">
-            <img src="cutest.jpg">
-            <div class="photo-caption">Just look at this cutie! 😍</div>
-        </div>
-
-        <div class="photo-entry">
-            <img src="his-fav.jpg">
-            <div class="photo-caption">I know you love this one! 💗</div>
-        </div>
-
-        <div class="photo-entry">
-            <video controls><source src="random-moment.mp4" type="video/mp4"></video>
-            <div class="photo-caption">A random "us" moment 💗</div>
-        </div>
-
-        <div class="photo-entry">
-            <img src="your-fav.jpg">
-            <div class="photo-caption">My absolute favorite click! ✨</div>
-        </div>
-
-        <div class="photo-entry">
-            <img src="first-garba.jpg">
-            <div class="photo-caption">Our very 1st Garba together! 💃</div>
-        </div>
-
-        <div class="photo-entry">
-            <video controls><source src="garba-video.mp4" type="video/mp4"></video>
-            <div class="photo-caption">We literally killed it! 🔥</div>
-        </div>
-
-        <div class="photo-entry">
-            <img src="first-diwali.jpg">
-            <div class="photo-caption">1st Diwali with my light 🪔</div>
-        </div>
-
-        <div class="photo-entry">
-            <video controls><source src="my-birthday-video.mp4" type="video/mp4"></video>
-            <div class="photo-caption">My birthday was special cuz of u! 💗</div>
-        </div>
-
-        <div class="photo-entry">
-            <img src="year-end.jpg">
-            <div class="photo-caption">Ending 2025 by your side 💗</div>
-        </div>
-
-        <div class="photo-entry">
-            <img src="new-phone.jpg">
-            <div class="photo-caption">Testing the camera on you 📱</div>
-        </div>
-
-        <div class="photo-entry">
-            <img src="alibaug-photo.jpg">
-            <div class="photo-caption">Our 1st Alibaug trip adventure! 🌊</div>
-        </div>
-
-        <div class="photo-entry">
-            <video controls><source src="alibaug-video.mp4" type="video/mp4"></video>
-            <div class="photo-caption">Take me back to the beach! 💗</div>
-        </div>
-
-        <section class="diary-text">
+        <section class="diary-entry">
             <p class="highlight">To my best, cute, and handsome boyfriend, happy birthday 💗</p>
-            
             <p>This is the day I’ve been waiting for, to tell you how I feel about you. You’re not just my boyfriend… sometimes you’ve been my best friend, sometimes like my mother, and sometimes like my father. Thank you for being all of that for me. I love being your baby.</p>
-            
             <p>Honestly, I’ve never felt this way for anyone before, because with you, I feel like I’m at home. I want this feeling to stay with me forever. The first half of 2025 was really bad for me, but in the second half, one beautiful thing happened — you came into my life.</p>
-            
             <p>After that, my life became super happy, cool, and yes, sometimes a little sad too… but it’s okay, because I know you’ll always be there for me.</p>
-            
             <p>In the beginning, my anger issues may have hurt you — I’m really sorry for that. Now I don’t want to be angry at you anymore. You’ve always been there for me when I’m angry, sad, and even when I’m happy.</p>
-            
             <p>I want to share all my emotions with you, because with you, I feel complete. I want to stay like this with you forever.</p>
-            
             <p>Everyone thinks you’re very kanjus and don’t care, but I know the truth — you spend so much and care even more. I hope you never feel that I don’t care about you, because I really do. I’m very, very happy that you are in my life.</p>
-            
             <p class="highlight">Now I can’t even imagine my life without you 💗</p>
         </section>
 
