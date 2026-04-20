@@ -4,18 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Kuku! 💗</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
-    
     <style>
         :root {
             --hot-pink: #ff4d94;
             --soft-pink: #fff0f5;
             --white: #ffffff;
             --text-dark: #4a4a4a;
-            --accent-pink: #ff85a2;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Rounded MT Bold', sans-serif; }
         
         body { 
             background: linear-gradient(135deg, var(--soft-pink) 0%, var(--white) 100%);
@@ -24,7 +21,7 @@
             scroll-behavior: smooth;
         }
 
-        /* --- 1. HEART INTRO --- */
+        /* --- HEART INTRO ANIMATION --- */
         #intro-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -37,15 +34,14 @@
         .heart-loader { font-size: 5rem; animation: pulse 1s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-        /* --- 2. Compact Hero (Fixed Space) --- */
+        /* --- HERO SECTION --- */
         header {
             position: relative;
-            height: 70vh; /* Shorter to keep it tight */
+            height: 65vh; /* Tight height to avoid blank space */
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            border-bottom: 5px solid var(--white);
             box-shadow: 0 4px 15px rgba(255, 77, 148, 0.1);
         }
         #hero-vid {
@@ -57,162 +53,168 @@
             object-fit: cover;
         }
         header h1 { 
-            font-size: clamp(2.5rem, 8vw, 4.5rem); 
+            font-size: clamp(2.5rem, 8vw, 4rem); 
             color: var(--white); 
             text-shadow: 2px 4px 12px rgba(255, 77, 148, 0.5);
             z-index: 1;
         }
 
-        /* --- 3. CUTE SCRAPBOOK GRID (NEW!) --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px 10px; }
+        /* --- PHOTO BOOK CONTAINER --- */
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px 10px; }
         
-        /* Reusable Title Component */
         .section-header { 
-            background: var(--white);
-            margin: 20px auto 30px; /* Reduced margin */
-            padding: 10px 30px;
-            border-radius: 50px;
-            width: fit-content;
-            box-shadow: 0 5px 15px rgba(255, 133, 162, 0.2);
-            position: relative;
+            margin: 20px auto 30px;
+            text-align: center;
         }
         .section-header h2 { 
             color: var(--hot-pink); 
-            font-size: 1.8rem; 
-            text-align: center; 
+            font-size: 1.8rem;
+            background: var(--white);
+            padding: 10px 30px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(255, 133, 162, 0.2);
+            display: inline-block;
         }
 
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px; /* Tighter gap to avoid blank space */
+            gap: 20px;
         }
 
-        /* THE POLAROID / SCRAPBOOK CARD SYSTEM */
+        /* POLAROID STACK ANIMATION */
         .card {
             background: var(--white);
-            padding: 10px;
-            border-radius: 5px; /* Subtle radius like physical paper */
-            border: 1px solid rgba(0,0,0,0.05); /* Very soft frame */
-            box-shadow: 5px 10px 25px rgba(255, 133, 162, 0.15); /* Soft, playful shadow */
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            padding: 12px 12px 40px 12px;
+            box-shadow: 5px 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
         }
+        
+        /* Tilt variations */
+        .card:nth-child(odd) { transform: rotate(-2deg); }
+        .card:nth-child(even) { transform: rotate(2deg); }
+
         .card:hover {
-            transform: translateY(-8px) scale(1.03) rotate(2deg); /* Wobbly tilt animation */
-            box-shadow: 8px 15px 30px rgba(255, 133, 162, 0.3);
-            border-color: var(--hot-pink);
+            transform: scale(1.05) rotate(0deg) !important;
+            z-index: 10;
+            box-shadow: 10px 20px 40px rgba(255, 77, 148, 0.2);
         }
+
         .card img, .card video {
             width: 100%;
-            height: 350px; /* Uniform height */
+            height: 350px;
             object-fit: cover;
-            border-radius: 3px; /* Match paper edge */
             display: block;
         }
+
         .card-caption {
-            padding: 15px 10px 10px;
+            margin-top: 15px;
             text-align: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             color: var(--hot-pink);
-            font-family: 'Comic Sans MS', cursive, sans-serif; /* Playful font for captions */
             font-weight: bold;
             font-size: 1.1rem;
-            position: relative;
         }
 
-        /* Float heart animation on hover */
-        .card:hover .card-caption::after {
-            content: '💗';
-            position: absolute;
-            top: -20px; right: 20px;
-            animation: floatUp 1.2s forwards;
-            opacity: 0;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-30px); opacity: 0; }
-        }
-
-        /* --- 4. FLOATING HEART BACKGROUND --- */
-        #floating-hearts {
-            position: fixed;
-            bottom: -50px;
-            left: 0;
-            width: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* --- 5. HEARTFELT MESSAGE (COMPACT) --- */
+        /* --- HEARTFELT MESSAGE --- */
         .final-msg { 
             background: var(--white);
             padding: 40px 25px; 
             border-radius: 30px; 
-            margin: 30px auto;
-            max-width: 900px;
+            margin: 40px auto;
+            max-width: 850px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             border: 2px solid var(--soft-pink);
-            box-shadow: 0 10px 30px rgba(255, 133, 162, 0.15);
-            z-index: 2; /* Sit on top of floating hearts */
         }
-        .final-msg h2 { color: var(--hot-pink); text-align: center; margin-bottom: 20px; font-size: 2.2rem; }
-        .final-msg p { line-height: 1.6; font-size: 1.1rem; color: #555; margin-bottom: 15px; }
+        .final-msg h2 { color: var(--hot-pink); text-align: center; margin-bottom: 25px; font-size: 2rem; }
+        .final-msg p { line-height: 1.7; font-size: 1.1rem; color: #555; margin-bottom: 15px; }
 
-        footer { padding: 30px; text-align: center; color: var(--hot-pink); font-weight: bold; position: relative; z-index: 2; }
+        footer { padding: 30px; text-align: center; color: var(--hot-pink); font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div id="intro-overlay"><div class="heart-loader">💗</div></div>
-    <div id="floating-hearts"></div>
 
     <header>
         <video autoplay muted loop playsinline id="hero-vid">
             <source src="background-video.mp4" type="video/mp4">
         </video>
-        <h1>For My Kuku 💗</h1>
+        <h1>Happy Birthday Kuku! 💗</h1>
     </header>
 
     <div class="container">
         
-        <div class="section-header"><h2>Cute Stuff & Us 💖</h2></div>
+        <div class="section-header"><h2>Our Sweet Memories 💖</h2></div>
+        
         <div class="photo-grid">
-            <div class="card"><img src="1st-photo.jpg"><div class="card-caption">Where it all began! 💖</div></div>
-            <div class="card"><img src="cute1.jpg"><div class="card-caption">Literal cutest face ever!</div></div>
-            <div class="card"><img src="your-fav.jpg"><div class="card-caption">The photo you like most! 💖</div></div>
-            <div class="card"><img src="cute2.jpg"><div class="card-caption">Just a random we-fie!</div></div>
-            <div class="card"><img src="my-fav.jpg"><div class="card-caption">My favorite click of you! 💖</div></div>
-        </div>
+            <div class="card">
+                <img src="1st-photo.jpg">
+                <div class="card-caption">Where it all began! 💗</div>
+            </div>
+            
+            <div class="card">
+                <img src="cutest.jpg">
+                <div class="card-caption">Just look at this cutie! 😍</div>
+            </div>
+            
+            <div class="card">
+                <img src="his-fav.jpg">
+                <div class="card-caption">I know you really love this one! 💗</div>
+            </div>
 
-        <div class="section-header"><h2>Firsts & Festive 🪔💃</h2></div>
-        <div class="photo-grid">
-            <div class="card"><img src="first-garba.jpg"><div class="card-caption">Our very 1st Garba!</div></div>
+            <div class="card">
+                <video controls><source src="random-moment.mp4" type="video/mp4"></video>
+                <div class="card-caption">A random "us" moment! 💗</div>
+            </div>
+
+            <div class="card">
+                <img src="your-fav.jpg">
+                <div class="card-caption">I personally think you look best here! ✨</div>
+            </div>
+
+            <div class="card">
+                <img src="first-garba.jpg">
+                <div class="card-caption">Our very 1st Garba together! 💃</div>
+            </div>
+            
             <div class="card">
                 <video controls><source src="garba-video.mp4" type="video/mp4"></video>
-                <div class="card-caption">Dancing with my partner 💖</div>
+                <div class="card-caption">We literally killed it! 🔥</div>
             </div>
-            <div class="card"><img src="first-diwali.jpg"><div class="card-caption">First Diwali lights together!</div></div>
-            <div class="card"><img src="diwali1.jpg"><div class="card-caption">Lighting up our lives. 💖</div></div>
-        </div>
 
-        <div class="section-header"><h2>Birthdays & 2025 Ends 🎉📱</h2></div>
-        <div class="photo-grid">
-            <div class="card"><img src="my-birthday.jpg"><div class="card-caption">My special birthday with you!</div></div>
-            <div class="card"><img src="year-end.jpg"><div class="card-caption">Ending 2025 on a high 💖</div></div>
-            <div class="card"><img src="new-phone.jpg"><div class="card-caption">First click on the new phone!</div></div>
-        </div>
-
-        <div class="section-header"><h2>Our Alibaug Trip 🌊🐚</h2></div>
-        <div class="photo-grid">
-            <div class="card"><img src="alibaug1.jpg"><div class="card-caption">1st Alibaug trip adventure!</div></div>
             <div class="card">
-                <video controls poster="alibaug-trip.jpg"><source src="alibaug-video.mp4" type="video/mp4"></video>
-                <div class="card-caption">Waves & us. 💖</div>
+                <img src="first-diwali.jpg">
+                <div class="card-caption">1st Diwali with my light 🪔</div>
             </div>
-            <div class="card"><img src="alibaug2.jpg"><div class="card-caption">Walking on the shore.</div></div>
+
+            <div class="card">
+                <video controls><source src="my-birthday-video.mp4" type="video/mp4"></video>
+                <div class="card-caption">My birthday was special cuz of u! 💗</div>
+            </div>
+
+            <div class="card">
+                <img src="year-end.jpg">
+                <div class="card-caption">Ending 2025 by your side 💗</div>
+            </div>
+
+            <div class="card">
+                <img src="new-phone.jpg">
+                <div class="card-caption">Testing the new camera on you! 📱</div>
+            </div>
+
+            <div class="card">
+                <img src="alibaug-photo.jpg">
+                <div class="card-caption">Our 1st Alibaug trip adventure! 🌊</div>
+            </div>
+
+            <div class="card">
+                <video controls><source src="alibaug-video.mp4" type="video/mp4"></video>
+                <div class="card-caption">Take me back to the beach! 💗</div>
+            </div>
         </div>
 
         <section class="final-msg">
@@ -230,43 +232,14 @@
     <footer>Made with 💗 for Kuku (Sahil)</footer>
 
     <script>
-        // Intro Loader Animation
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const intro = document.getElementById('intro-overlay');
                 intro.style.transition = 'opacity 0.8s ease';
                 intro.style.opacity = '0';
                 setTimeout(() => intro.style.display = 'none', 800);
-            }, 2000); // 2 seconds
+            }, 2000);
         });
-
-        // Floating Hearts Logic
-        function createHeart() {
-            const container = document.getElementById('floating-hearts');
-            const heart = document.createElement('div');
-            heart.innerText = '💗';
-            heart.style.position = 'absolute';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animation = 'floatUpRandom 4s linear forwards';
-            heart.style.opacity = Math.random() * 0.5 + 0.3; // Soft opacity
-            container.appendChild(heart);
-            setTimeout(() => heart.remove(), 4000);
-        }
-
-        // Float new hearts constantly
-        setInterval(createHeart, 800);
-
-        // Define CSS for the floating hearts
-        const style = document.createElement('style');
-        style.type = 'text/css';
-        style.innerHTML = `
-            @keyframes floatUpRandom {
-                0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-                10% { opacity: 1; }
-                100% { transform: translateY(-300px) rotate(360deg); opacity: 0; }
-            }
-        `;
-        document.getElementsByTagName('head')[0].appendChild(style);
     </script>
 </body>
 </html>
