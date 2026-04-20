@@ -7,233 +7,276 @@
     
     <link rel="icon" type="image/png" href="favicon.png">
     
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Indie+Flower&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --paper-white: #fdfdfd;
-            --line-blue: #e0ebf3;
-            --margin-red: #ffadad;
-            --pen-blue: #1a4d8c;
-            --hot-pink: #ff4d94;
+            --paper: #fdfdfd;
+            --lines: #e0ebf3;
+            --margin: #ffadad;
+            --ink: #1a4d8c;
+            --pink: #ff4d94;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background-color: #f0f0f0; /* Outer desk color */
+            background-color: #f0f0f0; 
             display: flex;
             justify-content: center;
         }
 
-        /* --- NOTEBOOK PAGE STRUCTURE --- */
-        #notebook-page {
+        /* --- THE NOTEBOOK PAGE --- */
+        #diary-page {
             width: 100%;
-            max-width: 500px; /* Perfect width for most mobile phones */
+            max-width: 480px; /* Measured for mobile phone screens */
             min-height: 100vh;
-            background-color: var(--paper-white);
-            background-image: linear-gradient(var(--line-blue) 1px, transparent 1px);
-            background-size: 100% 28px; /* Standard notebook line spacing */
+            background-color: var(--paper);
+            background-image: linear-gradient(var(--lines) 1px, transparent 1px);
+            background-size: 100% 28px; /* Standard notebook line height */
             position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            padding: 40px 20px 40px 60px; /* Space for the spiral margin */
-            border-left: 2px solid #ddd;
+            padding: 20px 15px 40px 55px; /* Margin for spiral binder */
+            border-left: 1px solid #ccc;
         }
 
-        /* The Red Margin Line */
-        #notebook-page::before {
+        /* Red Margin Line */
+        #diary-page::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 50px;
+            left: 45px;
             width: 2px;
             height: 100%;
-            background-color: var(--margin-red);
+            background-color: var(--margin);
         }
 
-        /* Spiral Binder Look */
+        /* Spiral Binder */
         .spiral {
             position: absolute;
-            left: 10px;
+            left: 8px;
             top: 20px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
             z-index: 10;
         }
         .ring {
-            width: 25px;
-            height: 10px;
-            background: linear-gradient(to bottom, #d1d1d1, #f0f0f0, #b1b1b1);
-            border-radius: 5px;
+            width: 22px;
+            height: 12px;
+            background: linear-gradient(to right, #ccc, #eee, #aaa);
+            border-radius: 10px;
             border: 1px solid #999;
         }
 
-        /* --- INTRO OVERLAY --- */
-        #intro-overlay {
+        /* --- STARTING HAPPY BIRTHDAY --- */
+        .bday-header {
+            text-align: center;
+            padding-top: 20px;
+            margin-bottom: 20px;
+        }
+        .bday-header h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--pink);
+            font-size: 2.8rem;
+            line-height: 1.1;
+        }
+
+        /* --- HERO VIDEO --- */
+        .video-box {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        #hero-vid { width: 100%; height: 220px; object-fit: cover; }
+
+        /* --- NOTEBOOK PHOTO THEME --- */
+        .photo-entry {
+            background: white;
+            padding: 8px 8px 35px 8px;
+            box-shadow: 3px 5px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: relative;
+            transform-origin: center;
+        }
+        /* Random Notebook Placement */
+        .photo-entry:nth-child(even) { transform: rotate(1.5deg); }
+        .photo-entry:nth-child(odd) { transform: rotate(-1.5deg); }
+
+        /* "Tape" on the photos */
+        .photo-entry::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            backdrop-filter: blur(2px);
+        }
+
+        .photo-entry img, .photo-entry video {
+            width: 100%;
+            height: auto;
+            max-height: 450px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .photo-caption {
+            font-family: 'Indie Flower', cursive;
+            color: var(--ink);
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        /* --- DIARY MESSAGE --- */
+        .diary-text {
+            font-family: 'Indie Flower', cursive;
+            color: var(--ink);
+            line-height: 28px; /* Matches line height of paper */
+            font-size: 1.2rem;
+            margin-top: 40px;
+        }
+        .diary-text p { margin-bottom: 28px; }
+        .highlight { color: var(--pink); font-weight: bold; }
+
+        /* --- INTRO --- */
+        #intro {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--paper-white);
+            background: var(--paper);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10000;
         }
-        .heart-loader { font-size: 4rem; animation: pulse 1s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .heart { font-size: 5rem; animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
-        /* --- CONTENT --- */
-        h1 {
-            font-family: 'Dancing Script', 'Comic Sans MS', cursive;
-            color: var(--hot-pink);
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            text-align: center;
-            line-height: 1.2;
-        }
-
-        .header-vid-container {
-            width: 100%;
-            height: 200px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 30px;
-            border: 5px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        #hero-vid { width: 100%; height: 100%; object-fit: cover; }
-
-        .section-tag {
-            font-family: 'Comic Sans MS', cursive;
-            color: var(--pen-blue);
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin: 20px 0 10px;
-            text-decoration: underline dotted;
-        }
-
-        /* POLAROID STYLE FOR PHONE */
-        .card {
-            background: white;
-            padding: 10px 10px 30px 10px;
-            box-shadow: 2px 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            transition: transform 0.3s ease;
-        }
-        .card:nth-child(odd) { transform: rotate(-2deg); }
-        .card:nth-child(even) { transform: rotate(2deg); }
-
-        .card img, .card video {
-            width: 100%;
-            height: auto; /* Maintains aspect ratio for phone screens */
-            max-height: 400px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .card-caption {
-            margin-top: 10px;
-            text-align: center;
-            font-family: 'Comic Sans MS', cursive;
-            color: var(--hot-pink);
-            font-weight: bold;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        /* --- MESSAGE (BLUE PEN STYLE) --- */
-        .final-msg { 
-            margin-top: 40px;
-            font-family: 'Comic Sans MS', cursive;
-            color: var(--pen-blue);
-            line-height: 28px; /* Matches notebook lines */
-            font-size: 1.05rem;
-        }
-        .final-msg p { margin-bottom: 28px; }
-
-        footer { 
-            padding: 40px 0; 
-            text-align: center; 
-            font-family: 'Comic Sans MS', cursive; 
-            color: #999; 
-            font-size: 0.8rem;
-        }
-
+        footer { text-align: center; padding: 40px 0; font-family: 'Indie Flower', cursive; opacity: 0.5; }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div id="intro-overlay"><div class="heart-loader">💗</div></div>
+    <div id="intro"><div class="heart">💗</div></div>
 
-    <div id="notebook-page">
+    <div id="diary-page">
         <div class="spiral">
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
         </div>
 
-        <header>
-            <h1>Happy Birthday<br>to my Kuku! 💗</h1>
-            <div class="header-vid-container">
-                <video autoplay muted loop playsinline id="hero-vid">
-                    <source src="background-video.mp4" type="video/mp4">
-                </video>
-            </div>
+        <header class="bday-header">
+            <h1>Happy Birthday<br>Kuku! 💗</h1>
         </header>
 
-        <p class="section-tag">Our Moments...</p>
+        <div class="video-box">
+            <video autoplay muted loop playsinline id="hero-vid">
+                <source src="background-video.mp4" type="video/mp4">
+            </video>
+        </div>
 
-        <div class="card"><img src="1st-photo.jpg"><div class="card-caption">Where it all began! 💗</div></div>
-        <div class="card"><img src="cutest.jpg"><div class="card-caption">Just look at this cutie! 😍</div></div>
-        <div class="card"><img src="his-fav.jpg"><div class="card-caption">I know you love this one! 💗</div></div>
-        
-        <div class="card">
+        <div class="photo-entry">
+            <img src="1st-photo.jpg">
+            <div class="photo-caption">Where it all began! 💗</div>
+        </div>
+
+        <div class="photo-entry">
+            <img src="cutest.jpg">
+            <div class="photo-caption">Just look at this cutie! 😍</div>
+        </div>
+
+        <div class="photo-entry">
+            <img src="his-fav.jpg">
+            <div class="photo-caption">I know you love this one! 💗</div>
+        </div>
+
+        <div class="photo-entry">
             <video controls><source src="random-moment.mp4" type="video/mp4"></video>
-            <div class="card-caption">A random "us" moment! 💗</div>
+            <div class="photo-caption">A random "us" moment 💗</div>
         </div>
 
-        <div class="card"><img src="your-fav.jpg"><div class="card-caption">My personal favorite of you! ✨</div></div>
-        <div class="card"><img src="first-garba.jpg"><div class="card-caption">Our very 1st Garba! 💃</div></div>
-        
-        <div class="card">
+        <div class="photo-entry">
+            <img src="your-fav.jpg">
+            <div class="photo-caption">My absolute favorite click! ✨</div>
+        </div>
+
+        <div class="photo-entry">
+            <img src="first-garba.jpg">
+            <div class="photo-caption">Our very 1st Garba together! 💃</div>
+        </div>
+
+        <div class="photo-entry">
             <video controls><source src="garba-video.mp4" type="video/mp4"></video>
-            <div class="card-caption">We literally killed it! 🔥</div>
+            <div class="photo-caption">We literally killed it! 🔥</div>
         </div>
 
-        <div class="card"><img src="first-diwali.jpg"><div class="card-caption">1st Diwali with my light 🪔</div></div>
+        <div class="photo-entry">
+            <img src="first-diwali.jpg">
+            <div class="photo-caption">1st Diwali with my light 🪔</div>
+        </div>
 
-        <div class="card">
+        <div class="photo-entry">
             <video controls><source src="my-birthday-video.mp4" type="video/mp4"></video>
-            <div class="card-caption">My birthday was special cuz of u! 💗</div>
+            <div class="photo-caption">My birthday was special cuz of u! 💗</div>
         </div>
 
-        <div class="card"><img src="year-end.jpg"><div class="card-caption">Ending 2025 by your side 💗</div></div>
-        <div class="card"><img src="new-phone.jpg"><div class="card-caption">Testing the camera on you! 📱</div></div>
-        <div class="card"><img src="alibaug-photo.jpg"><div class="card-caption">Our 1st Alibaug trip! 🌊</div></div>
-        
-        <div class="card">
+        <div class="photo-entry">
+            <img src="year-end.jpg">
+            <div class="photo-caption">Ending 2025 by your side 💗</div>
+        </div>
+
+        <div class="photo-entry">
+            <img src="new-phone.jpg">
+            <div class="photo-caption">Testing the camera on you 📱</div>
+        </div>
+
+        <div class="photo-entry">
+            <img src="alibaug-photo.jpg">
+            <div class="photo-caption">Our 1st Alibaug trip adventure! 🌊</div>
+        </div>
+
+        <div class="photo-entry">
             <video controls><source src="alibaug-video.mp4" type="video/mp4"></video>
-            <div class="card-caption">Take me back to the beach! 💗</div>
+            <div class="photo-caption">Take me back to the beach! 💗</div>
         </div>
 
-        <section class="final-msg">
-            <p style="color:var(--hot-pink); font-weight:bold;">To my best, cute, and handsome boyfriend, happy birthday 💗</p>
+        <section class="diary-text">
+            <p class="highlight">To my best, cute, and handsome boyfriend, happy birthday 💗</p>
+            
             <p>This is the day I’ve been waiting for, to tell you how I feel about you. You’re not just my boyfriend… sometimes you’ve been my best friend, sometimes like my mother, and sometimes like my father. Thank you for being all of that for me. I love being your baby.</p>
+            
             <p>Honestly, I’ve never felt this way for anyone before, because with you, I feel like I’m at home. I want this feeling to stay with me forever. The first half of 2025 was really bad for me, but in the second half, one beautiful thing happened — you came into my life.</p>
+            
             <p>After that, my life became super happy, cool, and yes, sometimes a little sad too… but it’s okay, because I know you’ll always be there for me.</p>
+            
             <p>In the beginning, my anger issues may have hurt you — I’m really sorry for that. Now I don’t want to be angry at you anymore. You’ve always been there for me when I’m angry, sad, and even when I’m happy.</p>
+            
             <p>I want to share all my emotions with you, because with you, I feel complete. I want to stay like this with you forever.</p>
+            
             <p>Everyone thinks you’re very kanjus and don’t care, but I know the truth — you spend so much and care even more. I hope you never feel that I don’t care about you, because I really do. I’m very, very happy that you are in my life.</p>
-            <p style="color:var(--hot-pink); font-weight:bold;">Now I can’t even imagine my life without you 💗</p>
+            
+            <p class="highlight">Now I can’t even imagine my life without you 💗</p>
         </section>
 
-        <footer>Created with 💗 for Kuku</footer>
+        <footer>Created with 💗 for Sahil</footer>
     </div>
 
     <script>
         window.addEventListener('load', () => {
             setTimeout(() => {
-                const intro = document.getElementById('intro-overlay');
+                const intro = document.getElementById('intro');
                 intro.style.transition = 'opacity 0.8s ease';
                 intro.style.opacity = '0';
                 setTimeout(() => intro.style.display = 'none', 800);
