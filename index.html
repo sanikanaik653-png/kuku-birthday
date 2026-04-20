@@ -4,232 +4,231 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Kuku! 💗</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    
     <style>
         :root {
+            --paper-white: #fdfdfd;
+            --line-blue: #e0ebf3;
+            --margin-red: #ffadad;
+            --pen-blue: #1a4d8c;
             --hot-pink: #ff4d94;
-            --soft-pink: #fff0f5;
-            --white: #ffffff;
-            --text-dark: #4a4a4a;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Rounded MT Bold', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background: linear-gradient(135deg, var(--soft-pink) 0%, var(--white) 100%);
-            color: var(--text-dark);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+            background-color: #f0f0f0; /* Outer desk color */
+            display: flex;
+            justify-content: center;
         }
 
-        /* --- HEART INTRO ANIMATION --- */
+        /* --- NOTEBOOK PAGE STRUCTURE --- */
+        #notebook-page {
+            width: 100%;
+            max-width: 500px; /* Perfect width for most mobile phones */
+            min-height: 100vh;
+            background-color: var(--paper-white);
+            background-image: linear-gradient(var(--line-blue) 1px, transparent 1px);
+            background-size: 100% 28px; /* Standard notebook line spacing */
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 40px 20px 40px 60px; /* Space for the spiral margin */
+            border-left: 2px solid #ddd;
+        }
+
+        /* The Red Margin Line */
+        #notebook-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50px;
+            width: 2px;
+            height: 100%;
+            background-color: var(--margin-red);
+        }
+
+        /* Spiral Binder Look */
+        .spiral {
+            position: absolute;
+            left: 10px;
+            top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 10;
+        }
+        .ring {
+            width: 25px;
+            height: 10px;
+            background: linear-gradient(to bottom, #d1d1d1, #f0f0f0, #b1b1b1);
+            border-radius: 5px;
+            border: 1px solid #999;
+        }
+
+        /* --- INTRO OVERLAY --- */
         #intro-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--white);
+            background: var(--paper-white);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10000;
         }
-        .heart-loader { font-size: 5rem; animation: pulse 1s infinite; }
+        .heart-loader { font-size: 4rem; animation: pulse 1s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-        /* --- HERO SECTION --- */
-        header {
-            position: relative;
-            height: 65vh; /* Tight height to avoid blank space */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(255, 77, 148, 0.1);
-        }
-        #hero-vid {
-            position: absolute;
-            top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-            object-fit: cover;
-        }
-        header h1 { 
-            font-size: clamp(2.5rem, 8vw, 4rem); 
-            color: var(--white); 
-            text-shadow: 2px 4px 12px rgba(255, 77, 148, 0.5);
-            z-index: 1;
-        }
-
-        /* --- PHOTO BOOK CONTAINER --- */
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px 10px; }
-        
-        .section-header { 
-            margin: 20px auto 30px;
+        /* --- CONTENT --- */
+        h1 {
+            font-family: 'Dancing Script', 'Comic Sans MS', cursive;
+            color: var(--hot-pink);
+            font-size: 2.2rem;
+            margin-bottom: 30px;
             text-align: center;
-        }
-        .section-header h2 { 
-            color: var(--hot-pink); 
-            font-size: 1.8rem;
-            background: var(--white);
-            padding: 10px 30px;
-            border-radius: 50px;
-            box-shadow: 0 5px 15px rgba(255, 133, 162, 0.2);
-            display: inline-block;
+            line-height: 1.2;
         }
 
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+        .header-vid-container {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        #hero-vid { width: 100%; height: 100%; object-fit: cover; }
+
+        .section-tag {
+            font-family: 'Comic Sans MS', cursive;
+            color: var(--pen-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+            text-decoration: underline dotted;
         }
 
-        /* POLAROID STACK ANIMATION */
+        /* POLAROID STYLE FOR PHONE */
         .card {
-            background: var(--white);
-            padding: 12px 12px 40px 12px;
-            box-shadow: 5px 10px 20px rgba(0,0,0,0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            position: relative;
-            border: 1px solid rgba(0,0,0,0.05);
+            background: white;
+            padding: 10px 10px 30px 10px;
+            box-shadow: 2px 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
         }
-        
-        /* Tilt variations */
         .card:nth-child(odd) { transform: rotate(-2deg); }
         .card:nth-child(even) { transform: rotate(2deg); }
 
-        .card:hover {
-            transform: scale(1.05) rotate(0deg) !important;
-            z-index: 10;
-            box-shadow: 10px 20px 40px rgba(255, 77, 148, 0.2);
-        }
-
         .card img, .card video {
             width: 100%;
-            height: 350px;
+            height: auto; /* Maintains aspect ratio for phone screens */
+            max-height: 400px;
             object-fit: cover;
             display: block;
         }
 
         .card-caption {
-            margin-top: 15px;
+            margin-top: 10px;
             text-align: center;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Comic Sans MS', cursive;
             color: var(--hot-pink);
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
-        /* --- HEARTFELT MESSAGE --- */
+        /* --- MESSAGE (BLUE PEN STYLE) --- */
         .final-msg { 
-            background: var(--white);
-            padding: 40px 25px; 
-            border-radius: 30px; 
-            margin: 40px auto;
-            max-width: 850px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 2px solid var(--soft-pink);
+            margin-top: 40px;
+            font-family: 'Comic Sans MS', cursive;
+            color: var(--pen-blue);
+            line-height: 28px; /* Matches notebook lines */
+            font-size: 1.05rem;
         }
-        .final-msg h2 { color: var(--hot-pink); text-align: center; margin-bottom: 25px; font-size: 2rem; }
-        .final-msg p { line-height: 1.7; font-size: 1.1rem; color: #555; margin-bottom: 15px; }
+        .final-msg p { margin-bottom: 28px; }
 
-        footer { padding: 30px; text-align: center; color: var(--hot-pink); font-weight: bold; }
+        footer { 
+            padding: 40px 0; 
+            text-align: center; 
+            font-family: 'Comic Sans MS', cursive; 
+            color: #999; 
+            font-size: 0.8rem;
+        }
+
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div id="intro-overlay"><div class="heart-loader">💗</div></div>
 
-    <header>
-        <video autoplay muted loop playsinline id="hero-vid">
-            <source src="background-video.mp4" type="video/mp4">
-        </video>
-        <h1>Happy Birthday Kuku! 💗</h1>
-    </header>
+    <div id="notebook-page">
+        <div class="spiral">
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+        </div>
 
-    <div class="container">
+        <header>
+            <h1>Happy Birthday<br>to my Kuku! 💗</h1>
+            <div class="header-vid-container">
+                <video autoplay muted loop playsinline id="hero-vid">
+                    <source src="background-video.mp4" type="video/mp4">
+                </video>
+            </div>
+        </header>
+
+        <p class="section-tag">Our Moments...</p>
+
+        <div class="card"><img src="1st-photo.jpg"><div class="card-caption">Where it all began! 💗</div></div>
+        <div class="card"><img src="cutest.jpg"><div class="card-caption">Just look at this cutie! 😍</div></div>
+        <div class="card"><img src="his-fav.jpg"><div class="card-caption">I know you love this one! 💗</div></div>
         
-        <div class="section-header"><h2>Our Sweet Memories 💖</h2></div>
+        <div class="card">
+            <video controls><source src="random-moment.mp4" type="video/mp4"></video>
+            <div class="card-caption">A random "us" moment! 💗</div>
+        </div>
+
+        <div class="card"><img src="your-fav.jpg"><div class="card-caption">My personal favorite of you! ✨</div></div>
+        <div class="card"><img src="first-garba.jpg"><div class="card-caption">Our very 1st Garba! 💃</div></div>
         
-        <div class="photo-grid">
-            <div class="card">
-                <img src="1st-photo.jpg">
-                <div class="card-caption">Where it all began! 💗</div>
-            </div>
-            
-            <div class="card">
-                <img src="cutest.jpg">
-                <div class="card-caption">Just look at this cutie! 😍</div>
-            </div>
-            
-            <div class="card">
-                <img src="his-fav.jpg">
-                <div class="card-caption">I know you really love this one! 💗</div>
-            </div>
+        <div class="card">
+            <video controls><source src="garba-video.mp4" type="video/mp4"></video>
+            <div class="card-caption">We literally killed it! 🔥</div>
+        </div>
 
-            <div class="card">
-                <video controls><source src="random-moment.mp4" type="video/mp4"></video>
-                <div class="card-caption">A random "us" moment! 💗</div>
-            </div>
+        <div class="card"><img src="first-diwali.jpg"><div class="card-caption">1st Diwali with my light 🪔</div></div>
 
-            <div class="card">
-                <img src="your-fav.jpg">
-                <div class="card-caption">I personally think you look best here! ✨</div>
-            </div>
+        <div class="card">
+            <video controls><source src="my-birthday-video.mp4" type="video/mp4"></video>
+            <div class="card-caption">My birthday was special cuz of u! 💗</div>
+        </div>
 
-            <div class="card">
-                <img src="first-garba.jpg">
-                <div class="card-caption">Our very 1st Garba together! 💃</div>
-            </div>
-            
-            <div class="card">
-                <video controls><source src="garba-video.mp4" type="video/mp4"></video>
-                <div class="card-caption">We literally killed it! 🔥</div>
-            </div>
-
-            <div class="card">
-                <img src="first-diwali.jpg">
-                <div class="card-caption">1st Diwali with my light 🪔</div>
-            </div>
-
-            <div class="card">
-                <video controls><source src="my-birthday-video.mp4" type="video/mp4"></video>
-                <div class="card-caption">My birthday was special cuz of u! 💗</div>
-            </div>
-
-            <div class="card">
-                <img src="year-end.jpg">
-                <div class="card-caption">Ending 2025 by your side 💗</div>
-            </div>
-
-            <div class="card">
-                <img src="new-phone.jpg">
-                <div class="card-caption">Testing the new camera on you! 📱</div>
-            </div>
-
-            <div class="card">
-                <img src="alibaug-photo.jpg">
-                <div class="card-caption">Our 1st Alibaug trip adventure! 🌊</div>
-            </div>
-
-            <div class="card">
-                <video controls><source src="alibaug-video.mp4" type="video/mp4"></video>
-                <div class="card-caption">Take me back to the beach! 💗</div>
-            </div>
+        <div class="card"><img src="year-end.jpg"><div class="card-caption">Ending 2025 by your side 💗</div></div>
+        <div class="card"><img src="new-phone.jpg"><div class="card-caption">Testing the camera on you! 📱</div></div>
+        <div class="card"><img src="alibaug-photo.jpg"><div class="card-caption">Our 1st Alibaug trip! 🌊</div></div>
+        
+        <div class="card">
+            <video controls><source src="alibaug-video.mp4" type="video/mp4"></video>
+            <div class="card-caption">Take me back to the beach! 💗</div>
         </div>
 
         <section class="final-msg">
-            <h2>To My Kuku... 💗</h2>
-            <p><strong>To my best, cute, and handsome boyfriend, happy birthday 💗</strong></p>
+            <p style="color:var(--hot-pink); font-weight:bold;">To my best, cute, and handsome boyfriend, happy birthday 💗</p>
             <p>This is the day I’ve been waiting for, to tell you how I feel about you. You’re not just my boyfriend… sometimes you’ve been my best friend, sometimes like my mother, and sometimes like my father. Thank you for being all of that for me. I love being your baby.</p>
-            <p>Honestly, I’ve never felt this way for anyone before, because with you, I feel like I’m at home. I want this feeling to stay with me forever. The first half of 2025 was really bad for me, but in the second half, one beautiful thing happened — you came into my life. After that, my life became super happy, cool, and yes, sometimes a little sad too… but it’s okay, because I know you’ll always be there for me.</p>
-            <p>In the beginning, my anger issues may have hurt you — I’m really sorry for that. Now I don’t want to be angry at you anymore. You’ve always been there for me when I’m angry, sad, and even when I’m happy. I want to share all my emotions with you, because with you, I feel complete. I want to stay like this with you forever.</p>
+            <p>Honestly, I’ve never felt this way for anyone before, because with you, I feel like I’m at home. I want this feeling to stay with me forever. The first half of 2025 was really bad for me, but in the second half, one beautiful thing happened — you came into my life.</p>
+            <p>After that, my life became super happy, cool, and yes, sometimes a little sad too… but it’s okay, because I know you’ll always be there for me.</p>
+            <p>In the beginning, my anger issues may have hurt you — I’m really sorry for that. Now I don’t want to be angry at you anymore. You’ve always been there for me when I’m angry, sad, and even when I’m happy.</p>
+            <p>I want to share all my emotions with you, because with you, I feel complete. I want to stay like this with you forever.</p>
             <p>Everyone thinks you’re very kanjus and don’t care, but I know the truth — you spend so much and care even more. I hope you never feel that I don’t care about you, because I really do. I’m very, very happy that you are in my life.</p>
-            <p><strong>Now I can’t even imagine my life without you 💗</strong></p>
+            <p style="color:var(--hot-pink); font-weight:bold;">Now I can’t even imagine my life without you 💗</p>
         </section>
 
+        <footer>Created with 💗 for Kuku</footer>
     </div>
-
-    <footer>Made with 💗 for Kuku (Sahil)</footer>
 
     <script>
         window.addEventListener('load', () => {
