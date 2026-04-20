@@ -8,41 +8,45 @@
     
     <style>
         :root {
-            --soft-pink: #ffdae9;
             --hot-pink: #ff4d94;
-            --cream: #fff9fb;
-            --text-grey: #444;
+            --soft-pink: #fff0f5;
+            --white: #ffffff;
+            --text-dark: #333;
+            --accent-pink: #ff85a2;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Rounded MT Bold', sans-serif; }
         
         body { 
-            background-color: var(--cream);
-            color: var(--text-grey);
+            background: linear-gradient(135deg, var(--soft-pink) 0%, var(--white) 100%);
+            color: var(--text-dark);
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* --- START ANIMATION --- */
+        /* --- 1. HEART INTRO --- */
         #intro-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
+            background: var(--white);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10000;
+            transition: opacity 1s ease;
         }
-        .heart-loader { font-size: 5rem; animation: pulse 1s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .heart-loader { font-size: 6rem; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
 
-        /* --- BRIGHT HERO --- */
+        /* --- 2. BRIGHT HERO SECTION --- */
         header {
             position: relative;
-            height: 80vh;
+            height: 85vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            box-shadow: 0 4px 20px rgba(255, 77, 148, 0.1);
         }
         #hero-vid {
             position: absolute;
@@ -51,58 +55,73 @@
             transform: translate(-50%, -50%);
             z-index: -1;
             object-fit: cover;
+            filter: brightness(0.95);
         }
         header h1 { 
-            font-size: clamp(2.5rem, 8vw, 4rem); 
-            color: white; 
-            text-shadow: 2px 2px 15px rgba(255, 77, 148, 0.6);
+            font-size: clamp(3rem, 10vw, 5rem); 
+            color: var(--white); 
+            text-shadow: 2px 4px 15px rgba(255, 77, 148, 0.6);
             z-index: 1;
         }
 
-        /* --- TIGHT PHOTO BOOK SYSTEM --- */
+        /* --- 3. PHOTO GRID (NO BLANK SPACE) --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
-        .section-title { 
-            color: var(--hot-pink); 
-            text-align: center; 
-            margin: 40px 0 20px; 
-            font-size: 1.8rem;
+        .section-header { 
+            background: var(--white);
+            margin: 40px auto;
+            padding: 15px 40px;
+            border-radius: 50px;
+            width: fit-content;
+            box-shadow: 0 5px 15px rgba(255, 77, 148, 0.15);
         }
+        .section-header h2 { color: var(--hot-pink); font-size: 1.8rem; text-align: center; }
 
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
+            gap: 20px;
         }
 
         .card {
-            background: white;
-            border-radius: 20px;
+            background: var(--white);
+            border-radius: 25px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(255, 133, 162, 0.15);
-            transition: transform 0.3s ease;
-            border: 2px solid var(--soft-pink);
+            border: 2px solid var(--white);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transition: transform 0.4s ease;
         }
-        .card:hover { transform: translateY(-5px); }
-        .card img, .card video { width: 100%; height: 350px; object-fit: cover; display: block; }
-        .card-caption { padding: 12px; text-align: center; font-weight: bold; color: var(--hot-pink); }
+        .card:hover { transform: scale(1.03); border-color: var(--hot-pink); }
+        .card img, .card video { width: 100%; height: 380px; object-fit: cover; display: block; }
+        .card-label { padding: 15px; text-align: center; font-weight: bold; color: var(--accent-pink); }
 
-        /* --- HEARTFELT MESSAGE --- */
+        /* --- 4. HEARTFELT MESSAGE --- */
         .final-msg { 
-            background: white;
-            padding: 40px 25px; 
-            border-radius: 30px; 
-            margin: 40px 0;
-            border: 2px solid var(--soft-pink);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            background: var(--white);
+            padding: 50px 30px; 
+            border-radius: 40px; 
+            margin: 50px auto;
+            max-width: 900px;
+            border: 1px solid var(--soft-pink);
+            box-shadow: 0 15px 40px rgba(255, 133, 162, 0.1);
         }
-        .final-msg h2 { color: var(--hot-pink); text-align: center; margin-bottom: 25px; }
-        .final-msg p { line-height: 1.6; font-size: 1.1rem; margin-bottom: 15px; }
+        .final-msg h2 { color: var(--hot-pink); text-align: center; margin-bottom: 30px; font-size: 2.2rem; }
+        .final-msg p { line-height: 1.8; font-size: 1.1rem; color: #555; margin-bottom: 20px; }
+        .pink-text { color: var(--hot-pink); font-weight: bold; }
 
-        footer { padding: 30px; text-align: center; color: var(--hot-pink); font-size: 0.9rem; }
+        footer { padding: 40px; text-align: center; color: var(--hot-pink); font-weight: bold; opacity: 0.7; }
+
+        /* CONFETTI CANVAS */
+        #confetti-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999;
+        }
     </style>
 </head>
 <body>
+
+    <canvas id="confetti-canvas"></canvas>
 
     <div id="intro-overlay"><div class="heart-loader">💗</div></div>
 
@@ -110,62 +129,107 @@
         <video autoplay muted loop playsinline id="hero-vid">
             <source src="background-video.mp4" type="video/mp4">
         </video>
-        <h1>For You, Kuku 💗</h1>
+        <h1>For My Kuku 💗</h1>
     </header>
 
     <div class="container">
         
-        <h2 class="section-title">Our Best Moments</h2>
+        <div class="section-header"><h2>Our Best Memories Together</h2></div>
+
         <div class="photo-grid">
-            <div class="card"><img src="1st-photo.jpg"><div class="card-caption">Where it all began! 💗</div></div>
+            <div class="card"><img src="1st-photo.jpg"><div class="card-label">The very 1st photo of us! 💗</div></div>
+            <div class="card"><img src="cutest.jpg"><div class="card-label">Literally the cutest photo!</div></div>
+            <div class="card"><img src="your-fav.jpg"><div class="card-label">The photo you like most! 💗</div></div>
             
-            <div class="card"><img src="cutest.jpg"><div class="card-caption">The cutest face ever!</div></div>
+            <div class="card">
+                <video controls><source src="random-moment.mp4" type="video/mp4"></video>
+                <div class="card-label">Just a random video of us!</div>
+            </div>
+
+            <div class="card"><img src="my-fav.jpg"><div class="card-label">The photo I like the most! 💗</div></div>
+            <div class="card"><img src="first-garba.jpg"><div class="card-label">Our first Garba together!</div></div>
             
-            <div class="card"><img src="your-fav.jpg"><div class="card-caption">A photo you really love 💗</div></div>
+            <div class="card">
+                <video controls><source src="garba-video.mp4" type="video/mp4"></video>
+                <div class="card-label">Playing Garba with you! 💗</div>
+            </div>
+
+            <div class="card"><img src="first-diwali.jpg"><div class="card-label">Our first Diwali! 🪔</div></div>
             
-            <div class="card"><video controls><source src="random-moment.mp4" type="video/mp4"></video><div class="card-caption">Just a random us moment!</div></div>
+            <div class="card">
+                <video controls><source src="my-birthday.mp4" type="video/mp4"></video>
+                <div class="card-label">My birthday with you! 💗</div>
+            </div>
+
+            <div class="card"><img src="year-end.jpg"><div class="card-label">Ending the year with my favorite.</div></div>
+            <div class="card"><img src="new-phone.jpg"><div class="card-label">First photo on the new phone! 📱</div></div>
+            <div class="card"><img src="alibaug-trip.jpg"><div class="card-label">Our 1st Alibaug trip! 🌊</div></div>
             
-            <div class="card"><img src="my-fav.jpg"><div class="card-caption">My absolute favorite of you 💗</div></div>
-            
-            <div class="card"><img src="first-garba.jpg"><div class="card-caption">Our first Garba together!</div></div>
-            
-            <div class="card"><video controls><source src="garba-video.mp4" type="video/mp4"></video><div class="card-caption">Dancing with my Kuku 💗</div></div>
-            
-            <div class="card"><img src="first-diwali.jpg"><div class="card-caption">Our first Diwali lights! 🪔</div></div>
-            
-            <div class="card"><video controls><source src="my-birthday.mp4" type="video/mp4"></video><div class="card-caption">My birthday was special because of you.</div></div>
-            
-            <div class="card"><img src="year-end.jpg"><div class="card-caption">Ending the year with you 💗</div></div>
-            
-            <div class="card"><img src="new-phone.jpg"><div class="card-caption">New phone, more photos of us!</div></div>
-            
-            <div class="card"><img src="alibaug-trip.jpg"><div class="card-caption">Our 1st trip to Alibaug 🌊</div></div>
-            
-            <div class="card"><video controls><source src="alibaug-video.mp4" type="video/mp4"></video><div class="card-caption">Memories from the shore 💗</div></div>
+            <div class="card">
+                <video controls><source src="alibaug-video.mp4" type="video/mp4"></video>
+                <div class="card-label">Memories from Alibaug! 💗</div>
+            </div>
         </div>
 
         <section class="final-msg">
             <h2>Happy Birthday, Sahil 💗</h2>
-            <p><strong>To my best, cute, and handsome boyfriend, happy birthday 💗</strong></p>
+            <p><span class="pink-text">To my best, cute, and handsome boyfriend, happy birthday 💗</span></p>
+            
             <p>This is the day I’ve been waiting for, to tell you how I feel about you. You’re not just my boyfriend… sometimes you’ve been my best friend, sometimes like my mother, and sometimes like my father. Thank you for being all of that for me. I love being your baby.</p>
+            
             <p>Honestly, I’ve never felt this way for anyone before, because with you, I feel like I’m at home. I want this feeling to stay with me forever. The first half of 2025 was really bad for me, but in the second half, one beautiful thing happened — you came into my life. After that, my life became super happy, cool, and yes, sometimes a little sad too… but it’s okay, because I know you’ll always be there for me.</p>
+            
             <p>In the beginning, my anger issues may have hurt you — I’m really sorry for that. Now I don’t want to be angry at you anymore. You’ve always been there for me when I’m angry, sad, and even when I’m happy. I want to share all my emotions with you, because with you, I feel complete. I want to stay like this with you forever.</p>
+            
             <p>Everyone thinks you’re very kanjus and don’t care, but I know the truth — you spend so much and care even more. I hope you never feel that I don’t care about you, because I really do. I’m very, very happy that you are in my life.</p>
-            <p><strong>Now I can’t even imagine my life without you 💗</strong></p>
+            
+            <p><span class="pink-text">Now I can’t even imagine my life without you 💗</span></p>
         </section>
 
     </div>
 
-    <footer>Made with 💗 for Sahil (Kuku)</footer>
+    <footer>Made with 💗 for Kuku (Sahil)</footer>
 
     <script>
+        // Intro and Confetti Logic
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const intro = document.getElementById('intro-overlay');
                 intro.style.opacity = '0';
-                setTimeout(() => intro.style.display = 'none', 1000);
+                setTimeout(() => { 
+                    intro.style.display = 'none';
+                    startConfetti();
+                }, 1000);
             }, 2000);
         });
+
+        function startConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let pieces = [];
+            for (let i = 0; i < 100; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 10 + 5,
+                    color: ['#ff4d94', '#ff85a2', '#ffeef2'][Math.floor(Math.random() * 3)],
+                    speed: Math.random() * 3 + 2
+                });
+            }
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(p => {
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(p.x, p.y, p.size, p.size);
+                    p.y += p.speed;
+                    if (p.y > canvas.height) p.y = -20;
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
     </script>
 </body>
 </html>
