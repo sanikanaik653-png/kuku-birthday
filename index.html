@@ -7,7 +7,7 @@
     
     <link rel="icon" type="image/png" href="favicon.png">
     
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Indie+Flower&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Indie+Flower&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -16,109 +16,128 @@
             --margin-line: #ffadad;
             --ink: #1a4d8c;
             --pink: #ff4d94;
-            --desk: #dcc5b0; /* Light wood color for desktop background */
+            --bg-soft: #fff5f7;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background-color: var(--desk); 
+            background-color: var(--bg-soft);
+            color: #333;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- HEART INTRO --- */
+        #intro {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
             display: flex;
             justify-content: center;
-            min-height: 100vh;
-            padding: 20px 10px;
+            align-items: center;
+            z-index: 10000;
         }
+        .heart-loader { font-size: 5rem; animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
-        /* --- THE RESPONSIVE NOTEBOOK --- */
-        #notebook {
-            width: 100%;
-            max-width: 800px; /* Wider for Desktop */
-            background-color: var(--paper);
-            background-image: linear-gradient(var(--lines) 1px, transparent 1px);
-            background-size: 100% 28px;
-            position: relative;
-            box-shadow: 10px 10px 30px rgba(0,0,0,0.2);
-            border-radius: 5px;
-            padding: 40px 30px 60px 70px; /* Desktop Padding */
-            border-left: 15px solid #333; /* The "Binder" spine */
-        }
-
-        /* Red Margin Line */
-        #notebook::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 60px;
-            width: 2px;
-            height: 100%;
-            background-color: var(--margin-line);
-        }
-
-        /* Spiral Binder Rings */
-        .spiral {
-            position: absolute;
-            left: -12px;
-            top: 40px;
+        /* --- HERO SECTION --- */
+        header {
+            height: 60vh;
             display: flex;
             flex-direction: column;
-            gap: 25px;
-            z-index: 10;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
         }
-        .ring {
-            width: 35px;
-            height: 12px;
-            background: linear-gradient(to bottom, #777, #eee, #777);
-            border-radius: 10px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-        }
-
-        /* --- HEADER & TITLES --- */
-        header { text-align: center; margin-bottom: 40px; }
         header h1 {
             font-family: 'Dancing Script', cursive;
             color: var(--pink);
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            line-height: 1.2;
+            font-size: clamp(3rem, 10vw, 5rem);
+            margin-bottom: 10px;
         }
-
-        .video-box {
+        .hero-video-container {
             width: 100%;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            border: 8px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            transform: rotate(-1deg);
+            max-width: 700px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 77, 148, 0.2);
+            border: 5px solid white;
         }
         #hero-vid { width: 100%; display: block; }
 
-        /* --- PHOTO SECTION --- */
+        /* --- THE CUTE NOTEBOOK PHOTO SECTION --- */
+        .notebook-section {
+            max-width: 1000px;
+            margin: 50px auto;
+            background-color: var(--paper);
+            background-image: linear-gradient(var(--lines) 1px, transparent 1px);
+            background-size: 100% 30px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 60px 40px 60px 80px;
+            border-left: 20px solid #444; /* Binder Spine */
+            border-radius: 5px;
+        }
+
+        /* Red Margin Line */
+        .notebook-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 70px;
+            width: 2px; height: 100%;
+            background-color: var(--margin-line);
+        }
+
+        /* Spiral Rings */
+        .spiral {
+            position: absolute;
+            left: -15px; top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .ring {
+            width: 40px; height: 15px;
+            background: linear-gradient(to bottom, #888, #eee, #888);
+            border-radius: 10px;
+            border: 1px solid #666;
+        }
+
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
-            margin-bottom: 50px;
         }
 
+        /* POLAROID STYLE */
         .polaroid {
             background: white;
-            padding: 10px 10px 40px 10px;
-            box-shadow: 5px 8px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            padding: 10px 10px 45px 10px;
+            box-shadow: 5px 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
         }
-        .polaroid:nth-child(even) { transform: rotate(2deg); }
-        .polaroid:nth-child(odd) { transform: rotate(-2deg); }
-        
-        .polaroid:hover {
-            transform: scale(1.05) rotate(0deg);
-            z-index: 5;
+        /* Sticky Tape Effect */
+        .polaroid::after {
+            content: '';
+            position: absolute;
+            top: -15px; left: 50%;
+            transform: translateX(-50%);
+            width: 90px; height: 30px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
+        .polaroid:nth-child(even) { transform: rotate(2deg); }
+        .polaroid:nth-child(odd) { transform: rotate(-2deg); }
+        .polaroid:hover { transform: scale(1.05) rotate(0deg); z-index: 10; }
+
         .polaroid img, .polaroid video {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            display: block;
+            width: 100%; height: 320px;
+            object-fit: cover; display: block;
         }
 
         .caption {
@@ -130,67 +149,60 @@
             font-weight: bold;
         }
 
-        /* --- DIARY MESSAGE --- */
-        .diary-entry {
+        /* --- HEARTFELT MESSAGE --- */
+        .message-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px 25px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 133, 162, 0.1);
+            border: 1px solid var(--soft-pink);
+        }
+        .message-content {
             font-family: 'Indie Flower', cursive;
-            color: var(--ink);
-            line-height: 28px;
             font-size: 1.3rem;
-            max-width: 700px;
-            margin: 0 auto;
+            line-height: 1.8;
+            color: var(--ink);
         }
-        .diary-entry p { margin-bottom: 28px; }
-        .highlight { color: var(--pink); font-weight: bold; }
+        .message-content p { margin-bottom: 20px; }
+        .pink-text { color: var(--pink); font-weight: bold; }
 
-        /* --- INTRO --- */
-        #intro {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--paper);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-        }
-        .heart { font-size: 5rem; animation: pulse 1s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-
-        /* --- MOBILE RESPONSIVE TWEAKS --- */
+        /* --- MOBILE ADAPTATION --- */
         @media (max-width: 600px) {
-            #notebook {
-                padding: 30px 10px 40px 55px;
-                border-left: 8px solid #333;
+            .notebook-section {
+                padding: 40px 15px 40px 60px;
+                margin: 20px 10px;
             }
-            #notebook::before { left: 45px; }
-            .spiral { left: -8px; gap: 30px; }
+            .notebook-section::before { left: 50px; }
+            .spiral { left: -10px; }
             .ring { width: 25px; height: 10px; }
-            .photo-grid { grid-template-columns: 1fr; }
+            header h1 { font-size: 2.8rem; }
             .polaroid img, .polaroid video { height: auto; max-height: 400px; }
         }
 
-        footer { text-align: center; padding: 40px 0; font-family: 'Indie Flower', cursive; color: #777; }
+        footer { text-align: center; padding: 40px; color: var(--pink); font-weight: bold; opacity: 0.6; }
     </style>
 </head>
 <body>
 
-    <div id="intro"><div class="heart">💗</div></div>
+    <div id="intro"><div class="heart-loader">💗</div></div>
 
-    <div id="notebook">
+    <header>
+        <h1>Happy Birthday Kuku! 💗</h1>
+        <div class="hero-video-container">
+            <video autoplay muted loop playsinline id="hero-vid">
+                <source src="background-video.mp4" type="video/mp4">
+            </video>
+        </div>
+    </header>
+
+    <div class="notebook-section">
         <div class="spiral">
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
             <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
-        </div>
-
-        <header>
-            <h1>Happy Birthday<br>Kuku! 💗</h1>
-        </header>
-
-        <div class="video-box">
-            <video autoplay muted loop playsinline id="hero-vid">
-                <source src="background-video.mp4" type="video/mp4">
-            </video>
         </div>
 
         <div class="photo-grid">
@@ -201,7 +213,7 @@
                 <video controls><source src="random-moment.mp4" type="video/mp4"></video>
                 <div class="caption">A random "us" moment 💗</div>
             </div>
-            <div class="polaroid"><img src="your-fav.jpg"><div class="caption">My absolute favorite click! ✨</div></div>
+            <div class="polaroid"><img src="your-fav.jpg"><div class="caption">My favorite click! ✨</div></div>
             <div class="polaroid"><img src="first-garba.jpg"><div class="caption">Our 1st Garba together! 💃</div></div>
             <div class="polaroid">
                 <video controls><source src="garba-video.mp4" type="video/mp4"></video>
@@ -220,20 +232,22 @@
                 <div class="caption">Take me back to the beach! 💗</div>
             </div>
         </div>
+    </div>
 
-        <section class="diary-entry">
-            <p class="highlight">To my best, cute, and handsome boyfriend, happy birthday 💗</p>
+    <section class="message-container">
+        <div class="message-content">
+            <p class="pink-text">To my best, cute, and handsome boyfriend, happy birthday 💗</p>
             <p>This is the day I’ve been waiting for, to tell you how I feel about you. You’re not just my boyfriend… sometimes you’ve been my best friend, sometimes like my mother, and sometimes like my father. Thank you for being all of that for me. I love being your baby.</p>
             <p>Honestly, I’ve never felt this way for anyone before, because with you, I feel like I’m at home. I want this feeling to stay with me forever. The first half of 2025 was really bad for me, but in the second half, one beautiful thing happened — you came into my life.</p>
             <p>After that, my life became super happy, cool, and yes, sometimes a little sad too… but it’s okay, because I know you’ll always be there for me.</p>
             <p>In the beginning, my anger issues may have hurt you — I’m really sorry for that. Now I don’t want to be angry at you anymore. You’ve always been there for me when I’m angry, sad, and even when I’m happy.</p>
             <p>I want to share all my emotions with you, because with you, I feel complete. I want to stay like this with you forever.</p>
             <p>Everyone thinks you’re very kanjus and don’t care, but I know the truth — you spend so much and care even more. I hope you never feel that I don’t care about you, because I really do. I’m very, very happy that you are in my life.</p>
-            <p class="highlight">Now I can’t even imagine my life without you 💗</p>
-        </section>
+            <p class="pink-text">Now I can’t even imagine my life without you 💗</p>
+        </div>
+    </section>
 
-        <footer>Created with 💗 for Sahil</footer>
-    </div>
+    <footer>Created with 💗 for Sahil</footer>
 
     <script>
         window.addEventListener('load', () => {
