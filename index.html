@@ -4,317 +4,201 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Kuku! 💗</title>
-    <link rel="icon" type="image/png" href="kuku-icon.png">
+    <link rel="icon" type="image/png" href="favicon.png">
     
     <style>
-        /* --- CSS VARIABLES & THEME --- */
         :root {
             --pink: #ff4d94;
-            --dark-pink: #cc0052;
             --black: #0a0a0a;
-            --grey: #1a1a1a;
+            --grey: #151515;
             --white: #ffffff;
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --glass: rgba(255, 77, 148, 0.1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background-color: var(--black); color: var(--white); overflow-x: hidden; scroll-behavior: smooth; }
 
-        body {
-            background-color: var(--black);
-            color: var(--white);
-            overflow-x: hidden;
-            line-height: 1.6;
+        /* --- CUTE START ANIMATION --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--black);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
         }
-
-        /* --- REUSABLE COMPONENTS --- */
-        .section-title {
-            text-align: center;
-            color: var(--pink);
-            font-size: 2.5rem;
-            margin: 50px 0;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .heart-icon {
-            color: var(--pink);
-            display: inline-block;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
+        .heart-burst { font-size: 5rem; animation: heart-beat 1.2s infinite; }
+        @keyframes heart-beat {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.3); }
             100% { transform: scale(1); }
         }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION WITH BG VIDEO --- */
         header {
+            position: relative;
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('hero-bg.jpg'); /* Replace with a background image */
-            background-size: cover;
-            background-position: center;
+            overflow: hidden;
             text-align: center;
+            border-bottom: 2px solid var(--pink);
         }
-
-        header h1 {
-            font-size: 4rem;
-            margin-bottom: 10px;
-            color: var(--pink);
-            text-shadow: 2px 2px 10px rgba(255, 77, 148, 0.5);
+        #hero-vid {
+            position: absolute;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: brightness(35%) grayscale(20%);
+            object-fit: cover;
         }
+        header h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); color: var(--pink); text-shadow: 0 0 20px rgba(255, 77, 148, 0.6); }
 
-        /* --- PHOTO BOOK CONTAINER --- */
-        .book-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
+        /* --- PHOTO BOOK GRID SYSTEM --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .section-title { 
+            color: var(--pink); 
+            margin: 80px 0 40px; 
+            text-align: center; 
+            font-size: 2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
-
-        .category-group {
-            margin-bottom: 100px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: var(--transition);
-        }
-
-        .category-group.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- PHOTO GRID & ANIMATION --- */
+        
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            perspective: 1000px;
+            gap: 30px;
         }
 
-        .photo-card {
-            position: relative;
-            height: 350px;
-            cursor: pointer;
-            transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .photo-card:hover {
-            transform: rotateY(10deg) rotateX(5deg);
-        }
-
-        .photo-card.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 15px;
+        /* --- THE ALBUM CARDS --- */
+        .card {
+            background: var(--grey);
+            border: 1px solid var(--glass);
+            border-radius: 12px;
             overflow: hidden;
-            border: 2px solid var(--pink);
-            box-shadow: 0 10px 20px rgba(255, 77, 148, 0.2);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
         }
+        .card.revealed { opacity: 1; transform: translateY(0); }
+        .card:hover { 
+            transform: scale(1.03); 
+            border-color: var(--pink);
+            box-shadow: 0 10px 30px rgba(255, 77, 148, 0.2);
+        }
+        .card img, .card video { width: 100%; height: 300px; object-fit: cover; border-bottom: 1px solid var(--glass); }
+        .card-caption { padding: 15px; text-align: center; font-style: italic; color: #ccc; }
 
-        .card-front img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* --- HEARTFELT MESSAGE --- */
+        .final-msg { 
+            background: linear-gradient(var(--grey), var(--black)); 
+            padding: 80px 30px; 
+            text-align: center; 
+            border-radius: 30px; 
+            margin-top: 100px;
+            border: 1px solid var(--pink);
         }
+        .final-msg p { max-width: 800px; margin: 0 auto; line-height: 1.8; font-size: 1.2rem; }
 
-        .card-back {
-            background: var(--grey);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform: rotateY(180deg);
-            padding: 20px;
-            text-align: center;
-            color: var(--pink);
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
+        footer { padding: 40px; text-align: center; color: #444; }
 
-        /* --- MESSAGE SECTION --- */
-        .message-section {
-            background: var(--grey);
-            padding: 80px 20px;
-            text-align: center;
-            border-top: 3px solid var(--pink);
-            margin-top: 50px;
-        }
-
-        .message-content {
-            max-width: 700px;
-            margin: 0 auto;
-            font-size: 1.2rem;
-            color: #eee;
-        }
-
-        footer {
-            padding: 40px;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #555;
-        }
-
-        /* --- RESPONSIVE DESIGN --- */
-        @media (max-width: 768px) {
-            header h1 { font-size: 2.5rem; }
-            .section-title { font-size: 1.8rem; }
-            .photo-card { height: 300px; }
-        }
     </style>
 </head>
 <body>
 
+    <div id="intro-overlay">
+        <div class="heart-burst">💗</div>
+    </div>
+
     <header>
-        <h1>Happy Birthday, Kuku! 💗</h1>
-        <p>A digital collection of our favorite moments together.</p>
-        <div style="margin-top: 30px; font-size: 2rem;">👇</div>
+        <video autoplay muted loop playsinline id="hero-vid">
+            <source src="background-video.mp4" type="video/mp4">
+        </video>
+        <h1>Happy Birthday Kuku 💗</h1>
+        <p style="z-index:1">Every picture tells a story of us.</p>
     </header>
 
-    <div class="book-container">
+    <div class="container">
+        
+        <h2 class="section-title">Our Alibaug Trip 🌊</h2>
+        <div class="photo-grid">
+            <div class="card"><img src="alibaug1.jpg"><div class="card-caption">The start of our adventure!</div></div>
+            <div class="card"><img src="alibaug2.jpg"><div class="card-caption">Walking by the shore 💗</div></div>
+            <div class="card"><img src="alibaug3.jpg"><div class="card-caption">Best sunset ever.</div></div>
+            <div class="card"><img src="alibaug4.jpg"><div class="card-caption">Pure happiness with you.</div></div>
+        </div>
 
-        <section class="category-group" id="cute-photos">
-            <h2 class="section-title">Cute Photos 💗</h2>
-            <div class="photo-grid">
-                <div class="photo-card" onclick="flipCard(this)">
-                    <div class="card-face card-front">
-                        <img src="photo1.jpg" alt="Kuku Cute Photo 1">
-                    </div>
-                    <div class="card-back">You look so handsome here! 💗</div>
-                </div>
-                <div class="photo-card" onclick="flipCard(this)">
-                    <div class="card-face card-front">
-                        <img src="photo2.jpg" alt="Kuku Cute Photo 2">
-                    </div>
-                    <div class="card-back">My favorite smile. 💗</div>
-                </div>
-                <div class="photo-card" onclick="flipCard(this)">
-                    <div class="card-face card-front">
-                        <img src="photo3.jpg" alt="Kuku Cute Photo 3">
-                    </div>
-                    <div class="card-back">Just look at those eyes! 💗</div>
-                </div>
+        <h2 class="section-title">Garba Nights 💃</h2>
+        <div class="photo-grid">
+            <div class="card">
+                <video controls poster="garba-dance.jpg">
+                    <source src="garba-video.mp4" type="video/mp4">
+                </video>
+                <div class="card-caption">Watching us dance is my favorite thing!</div>
             </div>
-        </section>
+            <div class="card"><img src="garba1.jpg"><div class="card-caption">You looked so good in ethnic!</div></div>
+            <div class="card"><img src="garba2.jpg"><div class="card-caption">Dancing till the music stopped. 💗</div></div>
+        </div>
 
-        <section class="category-group" id="best-memories">
-            <h2 class="section-title">Best Memories 💗</h2>
-            <div class="photo-grid">
-                <div class="photo-card" onclick="flipCard(this)">
-                    <div class="card-face card-front">
-                        <img src="photo4.jpg" alt="Memory 1">
-                    </div>
-                    <div class="card-back">The day we couldn't stop laughing.</div>
-                </div>
-                <div class="photo-card" onclick="flipCard(this)">
-                    <div class="card-face card-front">
-                        <img src="photo5.jpg" alt="Memory 2">
-                    </div>
-                    <div class="card-back">That cozy dinner night. 💗</div>
-                </div>
-            </div>
-        </section>
+        <h2 class="section-title">Celebrating Diwali 🪔</h2>
+        <div class="photo-grid">
+            <div class="card"><img src="diwali1.jpg"><div class="card-caption">Diyas and your smile.</div></div>
+            <div class="card"><img src="diwali2.jpg"><div class="card-caption">Our bright first Diwali together.</div></div>
+            <div class="card"><img src="diwali3.jpg"><div class="card-caption">Lighting up my world! 💗</div></div>
+        </div>
 
-        <section class="category-group" id="special-moments">
-            <h2 class="section-title">Special Moments 💗</h2>
-            <div class="photo-grid">
-                <div class="photo-card" onclick="flipCard(this)">
-                    <div class="card-face card-front">
-                        <img src="photo6.jpg" alt="Special 1">
-                    </div>
-                    <div class="card-back">A moment I'll cherish forever.</div>
-                </div>
-                <div class="photo-card" onclick="flipCard(this)">
-                    <div class="card-face card-front">
-                        <img src="photo7.jpg" alt="Special 2">
-                    </div>
-                    <div class="card-back">Every second with you is special.</div>
-                </div>
-            </div>
-        </section>
+        <h2 class="section-title">The Small Talks 💬</h2>
+        <div class="photo-grid">
+            <div class="card"><img src="chat1.jpg"><div class="card-caption">Late night deep talks.</div></div>
+            <div class="card"><img src="chat2.jpg"><div class="card-caption">The "I miss you" moments.</div></div>
+            <div class="card"><img src="chat3.jpg"><div class="card-caption">Screenshots of love.</div></div>
+            <div class="card"><img src="chat4.jpg"><div class="card-caption">You always know what to say. 💗</div></div>
+        </div>
 
-        <section class="category-group" id="adventures">
-            <h2 class="section-title">Our Adventures 💗</h2>
-            <div class="photo-grid">
-                <div class="photo-card" onclick="flipCard(this)">
-                    <div class="card-face card-front">
-                        <img src="photo8.jpg" alt="Adventure 1">
-                    </div>
-                    <div class="card-back">Exploring the world together!</div>
-                </div>
-                <div class="photo-card" onclick="flipCard(this)">
-                    <div class="card-face card-front">
-                        <img src="photo9.jpg" alt="Adventure 2">
-                    </div>
-                    <div class="card-back">Where to next, Kuku? 💗</div>
-                </div>
-                <div class="photo-card" onclick="flipCard(this)">
-                    <div class="card-face card-front">
-                        <img src="photo10.jpg" alt="Adventure 3">
-                    </div>
-                    <div class="card-back">Adventure is better with you.</div>
-                </div>
-            </div>
+        <section class="final-msg">
+            <h2 style="color:var(--pink); margin-bottom: 20px;">For You, Kuku... 💗</h2>
+            <p>
+                Sahil, we might not have gone on fancy coffee dates, but I wouldn't trade our Alibaug trip, 
+                our crazy Garba nights, or our simple Diwali celebrations for anything in the world. 
+                It's the small talks and the way you make me feel that matter most. 
+                Happy Birthday to my favorite person!
+            </p>
         </section>
 
     </div>
 
-    <section class="message-section">
-        <h2 class="section-title">To My Dearest Kuku...</h2>
-        <div class="message-content">
-            <p>Happy Birthday, Kuku! 💗</p><br>
-            <p>You bring so much light and joy into my life every single day. I wanted to create this little space to remind you of how much you mean to me and how many beautiful memories we've already shared.</p><br>
-            <p>Thank you for being you—for your kindness, your laughter, and your love. I can't wait to see what this next year brings for us. I'll always be your biggest fan!</p><br>
-            <p>I love you to the moon and back. 💗</p>
-        </div>
-    </section>
-
-    <footer>
-        <p>Made with love for Kuku 💗</p>
-    </footer>
+    <footer>Made with 💗 for Kuku</footer>
 
     <script>
-        // --- PHOTO FLIP LOGIC ---
-        function flipCard(card) {
-            card.classList.toggle('flipped');
-        }
+        // 1. Fade out the Heart Intro
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const intro = document.getElementById('intro-overlay');
+                intro.style.transition = 'opacity 1s ease';
+                intro.style.opacity = '0';
+                setTimeout(() => intro.style.display = 'none', 1000);
+            }, 2500);
+        });
 
-        // --- SCROLL REVEAL ANIMATION ---
-        // Using Intersection Observer for smooth fade-in as Kuku scrolls
-        const observerOptions = {
-            threshold: 0.1
-        };
-
+        // 2. Scroll Reveal Animation for Cards
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    entry.target.classList.add('revealed');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.15 });
 
-        document.querySelectorAll('.category-group').forEach(section => {
-            observer.observe(section);
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
         });
-
-        // --- PREVENT RIGHT CLICK (Optional, to protect photos) ---
-        /*
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        */
     </script>
 </body>
 </html>
